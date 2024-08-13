@@ -1,8 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://2vxeqf41iwdd"]
+[gd_scene load_steps=7 format=3 uid="uid://2vxeqf41iwdd"]
 
 [ext_resource type="PackedScene" uid="uid://dm4gekwy6ps2g" path="res://player.tscn" id="1_aaq50"]
-[ext_resource type="Texture2D" uid="uid://o346ie20hvot" path="res://kenney_prototype_textures/light/texture_06.png" id="1_aidaq"]
 [ext_resource type="PackedScene" uid="uid://dpeis3keb67mg" path="res://enemy.tscn" id="2_khl5j"]
+[ext_resource type="PackedScene" uid="uid://b1fy42qy2720w" path="res://map.tscn" id="4_luyni"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_3wum5"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -16,17 +16,6 @@ background_mode = 2
 sky = SubResource("Sky_a3ism")
 tonemap_mode = 2
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jgqb4"]
-albedo_texture = ExtResource("1_aidaq")
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_riv03"]
-lightmap_size_hint = Vector2i(102, 102)
-material = SubResource("StandardMaterial3D_jgqb4")
-size = Vector2(20, 20)
-
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_630fl"]
-data = PackedVector3Array(10, 0, 10, -10, 0, 10, 10, 0, -10, -10, 0, 10, -10, 0, -10, 10, 0, -10)
-
 [node name="World" type="Node"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -37,17 +26,11 @@ transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -
 shadow_enabled = true
 sky_mode = 1
 
-[node name="Ground" type="MeshInstance3D" parent="."]
-mesh = SubResource("PlaneMesh_riv03")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Ground"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_630fl")
-
 [node name="Player" parent="." instance=ExtResource("1_aaq50")]
 
 [node name="Enemies" type="Node3D" parent="."]
 
 [node name="Enemy" parent="Enemies" instance=ExtResource("2_khl5j")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.80097)
+
+[node name="map" parent="." instance=ExtResource("4_luyni")]
