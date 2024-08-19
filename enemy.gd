@@ -4,9 +4,10 @@ extends CharacterBody3D
 @onready var spring_arm_pivot = get_node("SpringArmPivot")
 @onready var spring_arm = get_node("SpringArmPivot/SpringArm3D")
 @onready var anim_tree = get_node("AnimationTree")
+@onready var player = get_node("../../Player")
 
-const SPEED = 5.0
-const JUMP_VELOCITY = 4.5
+const SPEED = 6.0
+
 const lerp_val = 0.15
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -39,8 +40,9 @@ func _physics_process(delta):
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir = Vector3.ZERO
-	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	direction = direction.rotated(Vector3.UP, spring_arm_pivot.rotation.y)
+
+	var direction = (transform.basis * Vector3(player.position.x - position.x, 0, player.position.z - position.z)).normalized()
+	
 	if direction:
 		velocity.x = lerp(velocity.x, direction.x * SPEED, lerp_val)
 		velocity.z = lerp(velocity.z, direction.z * SPEED, lerp_val)
