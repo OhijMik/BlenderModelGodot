@@ -33,7 +33,9 @@ func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 	
-	flashlight.rotation.y = armature.rotation.y + 135
+	flashlight.rotation.y = spring_arm_pivot.rotation.y + 135
+	flashlight.rotation.x = spring_arm_pivot.rotation.x
+	flashlight.rotation.z = spring_arm_pivot.rotation.z
 
 	if Input.is_action_pressed("Flashlight"):
 		flashlight.light_energy = 0.01

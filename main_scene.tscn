@@ -28,8 +28,6 @@ environment = SubResource("Environment_wm6k7")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, -0.0214421, 2.19311, 0)
-light_color = Color(1, 0, 0, 1)
-light_energy = 0.01
 light_bake_mode = 0
 shadow_opacity = 0.0
 
