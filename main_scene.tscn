@@ -12,24 +12,14 @@ ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
 sky_material = SubResource("ProceduralSkyMaterial_3wum5")
 
 [sub_resource type="Environment" id="Environment_wm6k7"]
-background_mode = 1
+background_mode = 2
 background_color = Color(1, 1, 1, 1)
 sky = SubResource("Sky_a3ism")
-ambient_light_source = 3
-ambient_light_color = Color(1, 1, 1, 1)
 tonemap_mode = 2
 fog_enabled = true
 fog_light_color = Color(0, 0, 0, 1)
-fog_light_energy = 16.0
 fog_sun_scatter = 1.0
-fog_density = 0.4305
-fog_sky_affect = 0.0
-volumetric_fog_density = 1.0
-volumetric_fog_albedo = Color(0, 0, 0, 1)
-volumetric_fog_emission_energy = 628.93
-volumetric_fog_gi_inject = 7.0
-volumetric_fog_anisotropy = 0.9
-volumetric_fog_length = 67.75
+fog_density = 0.5
 
 [node name="World" type="Node"]
 
@@ -38,9 +28,10 @@ environment = SubResource("Environment_wm6k7")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, -0.0214421, 2.19311, 0)
+light_color = Color(1, 0, 0, 1)
 light_energy = 0.01
-light_angular_distance = 90.0
 light_bake_mode = 0
+shadow_opacity = 0.0
 
 [node name="Player" parent="." instance=ExtResource("1_aaq50")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.211)

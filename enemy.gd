@@ -3,8 +3,9 @@ extends CharacterBody3D
 @onready var armature = get_node("Armature")
 @onready var anim_tree = get_node("AnimationTree")
 @onready var player = get_node("../../Player")
+@onready var timer = get_node("AgroTimer")
 
-const SPEED = 6.0
+const SPEED = 3.0
 
 const lerp_val = 0.15
 
@@ -22,7 +23,7 @@ func _physics_process(delta):
 		velocity.y -= gravity * delta
 
 	var direction = Vector3.ZERO
-	# direction = (transform.basis * Vector3(player.position.x - position.x, 0, player.position.z - position.z)).normalized()
+	direction = (transform.basis * Vector3(player.position.x - position.x, 0, player.position.z - position.z)).normalized()
 	
 	if direction:
 		velocity.x = lerp(velocity.x, direction.x * SPEED, lerp_val)
@@ -32,6 +33,9 @@ func _physics_process(delta):
 	else:
 		velocity.x = lerp(velocity.x, 0.0, lerp_val)
 		velocity.z = lerp(velocity.z, 0.0, lerp_val)
+	
+	if position.distance_to(player.position) <= 2 and not timer.is_playing():
+		velocity = Vector3.ZERO
 	
 	anim_tree.set("parameters/BlendSpace1D/blend_position", velocity.length() / SPEED)
 
