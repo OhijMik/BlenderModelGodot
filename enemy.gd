@@ -4,6 +4,7 @@ extends CharacterBody3D
 @onready var anim_tree = get_node("AnimationTree")
 @onready var player = get_node("../../Player")
 @onready var aggro_timer = get_node("AggroTimer")
+@onready var deaggro_timer = get_node("DeaggroTimer")
 
 const lerp_val = 0.15
 
@@ -37,7 +38,7 @@ func _physics_process(delta):
 
 func follow_player():
 	var direction = Vector3.ZERO
-	direction = (transform.basis * Vector3(player.position.x - position.x, 0, player.position.z - position.z)).normalized()
+	#direction = (transform.basis * Vector3(player.position.x - position.x, 0, player.position.z - position.z)).normalized()
 	
 	if direction:
 		velocity.x = lerp(velocity.x, direction.x * speed, lerp_val)
