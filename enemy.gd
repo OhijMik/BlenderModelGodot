@@ -12,6 +12,7 @@ const lerp_val = 0.15
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var aggro = false
 var speed = 2.0
+var slowed = false
 
 
 func _ready():
@@ -19,6 +20,7 @@ func _ready():
 
 
 func _physics_process(delta):
+	slowed = false
 	if not aggro:
 		$Armature/Skeleton3D/OmniLight3D.light_color = Color(255, 255, 255)
 		speed = 2.0
@@ -30,7 +32,10 @@ func _physics_process(delta):
 			velocity = Vector3.ZERO
 	else:
 		$Armature/Skeleton3D/OmniLight3D.light_color = Color(91, 0, 0)
-		speed = 10.0
+		if slowed:
+			speed = 2.5
+		else:
+			speed = 10.0
 		follow_player()
 	
 	anim_tree.set("parameters/BlendSpace1D/blend_position", velocity.length() / speed)
@@ -40,7 +45,7 @@ func _physics_process(delta):
 
 func follow_player():
 	var direction = Vector3.ZERO
-	#direction = (transform.basis * Vector3(player.position.x - position.x, 0, player.position.z - position.z)).normalized()
+	direction = (transform.basis * Vector3(player.position.x - position.x, 0, player.position.z - position.z)).normalized()
 	
 	if direction:
 		velocity.x = lerp(velocity.x, direction.x * speed, lerp_val)

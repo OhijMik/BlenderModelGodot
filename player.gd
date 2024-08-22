@@ -30,8 +30,8 @@ func _unhandled_input(event):
 
 func _physics_process(delta):
 	raycast.add_exception($".")
-	if raycast.is_colliding():
-		print(raycast.get_collider())
+	if raycast.is_colliding() and "Enemy" in raycast.get_collider().name:
+		raycast.get_collider().slowed = true
 	
 	flashlight.rotation.y = spring_arm_pivot.rotation.y + 135
 	flashlight.rotation.x = spring_arm_pivot.rotation.x
@@ -43,7 +43,7 @@ func _physics_process(delta):
 	
 	if Input.is_action_pressed("Flashlight"):
 		flashlight.light_energy = 0.01
-		speed = 0.5
+		speed = 2.0
 	else:
 		flashlight.light_energy = 0
 		speed = 5.0
