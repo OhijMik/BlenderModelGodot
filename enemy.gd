@@ -20,6 +20,7 @@ func _ready():
 
 func _physics_process(delta):
 	if not aggro:
+		$Armature/Skeleton3D/OmniLight3D.light_color = Color(255, 255, 255)
 		speed = 2.0
 		if aggro_timer.is_stopped():
 			follow_player()
@@ -28,6 +29,7 @@ func _physics_process(delta):
 		else:
 			velocity = Vector3.ZERO
 	else:
+		$Armature/Skeleton3D/OmniLight3D.light_color = Color(91, 0, 0)
 		speed = 10.0
 		follow_player()
 	
