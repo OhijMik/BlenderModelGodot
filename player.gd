@@ -6,6 +6,7 @@ extends CharacterBody3D
 @onready var anim_tree = get_node("AnimationTree")
 @onready var flashlight = get_node("../DirectionalLight3D")
 @onready var raycast = get_node("SpringArmPivot/SpringArm3D/RayCast3D")
+@onready var enemy = get_node("../Enemy")
 
 const JUMP_VELOCITY = 4.5
 const lerp_val = 0.15
@@ -30,8 +31,10 @@ func _unhandled_input(event):
 
 func _physics_process(delta):
 	raycast.add_exception($".")
-	if raycast.is_colliding() and "Enemy" in raycast.get_collider().name:
-		raycast.get_collider().slowed = true
+	if raycast.is_colliding() and enemy == raycast.get_collider():
+		enemy.flashed = true
+	else:
+		enemy.flashed = false
 	
 	flashlight.rotation.y = spring_arm_pivot.rotation.y + 135
 	flashlight.rotation.x = spring_arm_pivot.rotation.x

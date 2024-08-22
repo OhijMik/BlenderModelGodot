@@ -34,9 +34,7 @@ shadow_opacity = 0.0
 [node name="Player" parent="." instance=ExtResource("1_aaq50")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.211)
 
-[node name="Enemies" type="Node3D" parent="."]
-
-[node name="Enemy" parent="Enemies" instance=ExtResource("2_khl5j")]
+[node name="Enemy" parent="." instance=ExtResource("2_khl5j")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.80097)
 
 [node name="map" parent="." instance=ExtResource("4_luyni")]
