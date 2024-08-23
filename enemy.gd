@@ -5,6 +5,7 @@ extends CharacterBody3D
 @onready var player = get_node("../Player")
 @onready var aggro_timer = get_node("AggroTimer")
 @onready var deaggro_timer = get_node("DeaggroTimer")
+@onready var passive_timer = get_node("PassiveTimer")
 
 const lerp_val = 0.15
 
@@ -13,6 +14,7 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var aggro = false
 var speed = 2.0
 var flashed = false
+var passive = false
 
 
 func _ready():
@@ -20,7 +22,11 @@ func _ready():
 
 
 func _physics_process(delta):
-	if not aggro:
+	if passive:
+		speed = 0.0
+		velocity = Vector3.ZERO
+		$Armature/Skeleton3D/OmniLight3D.light_color = Color(0.149, 0.537, 0)
+	elif not aggro:
 		$Armature/Skeleton3D/OmniLight3D.light_color = Color(255, 255, 255)
 		speed = 2.0
 		if aggro_timer.is_stopped():
@@ -38,6 +44,7 @@ func _physics_process(delta):
 		else:
 			$Armature/Skeleton3D/OmniLight3D.light_color = Color(0.313, 0.042, 0)
 			speed = 8.0
+			deaggro_timer.stop()
 		follow_player()
 	
 	anim_tree.set("parameters/BlendSpace1D/blend_position", velocity.length() / speed)
@@ -68,3 +75,11 @@ func _on_aggro_timer_timeout():
 
 func _on_deaggro_timer_timeout():
 	aggro = false
+	passive_timer.start()
+	passive = true
+
+
+func _on_passive_timer_timeout():
+	$Armature/Skeleton3D/OmniLight3D.light_color = Color(255, 255, 255)
+	passive = false
+	
