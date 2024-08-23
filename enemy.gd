@@ -32,7 +32,9 @@ func _physics_process(delta):
 	else:
 		if flashed:
 			$Armature/Skeleton3D/OmniLight3D.light_color = Color(1, 1, 0.376)
-			speed = 2.4
+			speed = 2.0
+			if deaggro_timer.is_stopped():
+				deaggro_timer.start()
 		else:
 			$Armature/Skeleton3D/OmniLight3D.light_color = Color(0.313, 0.042, 0)
 			speed = 8.0
@@ -62,3 +64,7 @@ func _on_aggro_timer_timeout():
 		aggro = true
 	else:
 		aggro_timer.stop()
+
+
+func _on_deaggro_timer_timeout():
+	aggro = false

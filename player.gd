@@ -30,12 +30,6 @@ func _unhandled_input(event):
 
 
 func _physics_process(delta):
-	raycast.add_exception($".")
-	if raycast.is_colliding() and enemy == raycast.get_collider():
-		enemy.flashed = true
-	else:
-		enemy.flashed = false
-	
 	flashlight.rotation.y = spring_arm_pivot.rotation.y + 135
 	flashlight.rotation.x = spring_arm_pivot.rotation.x
 	flashlight.rotation.z = spring_arm_pivot.rotation.z
@@ -47,9 +41,15 @@ func _physics_process(delta):
 	if Input.is_action_pressed("Flashlight"):
 		flashlight.light_energy = 0.01
 		speed = 2.0
+		raycast.add_exception($".")
+		if raycast.is_colliding() and enemy == raycast.get_collider():
+			enemy.flashed = true
+		else:
+			enemy.flashed = false
 	else:
 		flashlight.light_energy = 0
 		speed = 5.0
+		enemy.flashed = false
 	
 	if direction:
 		velocity.x = lerp(velocity.x, direction.x * speed, lerp_val)
