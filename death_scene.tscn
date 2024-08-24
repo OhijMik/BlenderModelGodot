@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://t0v5ydfa215"]
+[gd_scene load_steps=6 format=3 uid="uid://t0v5ydfa215"]
 
 [ext_resource type="PackedScene" uid="uid://cmo4hru2c56ai" path="res://enemy_model.blend" id="1_33ebp"]
+[ext_resource type="Script" path="res://death_scene.gd" id="1_en6in"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_cjuwt"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -15,6 +16,7 @@ sky = SubResource("Sky_51yv0")
 tonemap_mode = 2
 
 [node name="DeathScene" type="Node3D"]
+script = ExtResource("1_en6in")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.87566, 0.643811)
@@ -27,3 +29,8 @@ environment = SubResource("Environment_kxlot")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.76751, 0.290897)
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
