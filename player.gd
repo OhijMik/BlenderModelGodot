@@ -14,15 +14,13 @@ const lerp_val = 0.15
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var speed = 5.0
+var dead = false
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 
 func _unhandled_input(event):
-	if Input.is_action_just_pressed("quit"):
-		get_tree().quit()
-		
 	if event is InputEventMouseMotion:
 		spring_arm_pivot.rotate_y(-event.relative.x * .005)
 		spring_arm.rotate_x(-event.relative.y * .005)
@@ -63,3 +61,8 @@ func _physics_process(delta):
 	anim_tree.set("parameters/BlendSpace1D/blend_position", velocity.length() * speed)
 
 	move_and_slide()
+
+
+func _on_area_3d_body_entered(body):
+	if body == enemy:
+		dead = true
