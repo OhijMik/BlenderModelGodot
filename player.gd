@@ -35,11 +35,15 @@ func _physics_process(delta):
 	var input_dir = Input.get_vector("left", "right", "forward", "back")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	direction = direction.rotated(Vector3.UP, spring_arm_pivot.rotation.y)
+	raycast.add_exception($".")
+	interact_range_indicator()
 	
-	if Input.is_action_pressed("Flashlight"):
+	if Input.is_action_pressed("Interact"):
+		if raycast.is_colliding() and "Bed" in raycast.get_collider().name:
+			print("under bed")
+	elif Input.is_action_pressed("Flashlight"):
 		flashlight.light_energy = 0.01
 		speed = 2.0
-		raycast.add_exception($".")
 		if raycast.is_colliding() and enemy == raycast.get_collider():
 			enemy.flashed = true
 		else:
@@ -66,3 +70,9 @@ func _physics_process(delta):
 func _on_area_3d_body_entered(body):
 	if body == enemy:
 		dead = true
+
+
+func interact_range_indicator():
+	if raycast.is_colliding() and "Bed" in raycast.get_collider().name and \
+		position.distance_to(raycast.get_collider().global_position) <= 3:
+		raycast.get_collider().scale = Vector3(1.1, 1.1, 1.1)

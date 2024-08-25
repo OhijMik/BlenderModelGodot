@@ -28,8 +28,8 @@ func _physics_process(delta):
 		$Armature/Skeleton3D/OmniLight3D.light_color = Color(0.149, 0.537, 0)
 	elif not aggro:
 		$Armature/Skeleton3D/OmniLight3D.light_color = Color(255, 255, 255)
-		speed = 2.0
-		if aggro_timer.is_stopped():
+		speed = 3.0
+		if aggro_timer.is_stopped() and position.distance_to(player.position) <= 8:
 			follow_player()
 			if position.distance_to(player.position) <= 4:
 				aggro_timer.start()
@@ -43,7 +43,7 @@ func _physics_process(delta):
 				deaggro_timer.start()
 		else:
 			$Armature/Skeleton3D/OmniLight3D.light_color = Color(0.313, 0.042, 0)
-			speed = 8.0
+			speed = 9.0
 			deaggro_timer.stop()
 		follow_player()
 	
@@ -54,7 +54,7 @@ func _physics_process(delta):
 
 func follow_player():
 	var direction = Vector3.ZERO
-	direction = (transform.basis * Vector3(player.position.x - position.x, 0, player.position.z - position.z)).normalized()
+	#direction = (transform.basis * Vector3(player.position.x - position.x, 0, player.position.z - position.z)).normalized()
 	
 	if direction:
 		velocity.x = lerp(velocity.x, direction.x * speed, lerp_val)
