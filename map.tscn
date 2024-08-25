@@ -13,17 +13,18 @@ data = PackedVector3Array(-0.5256, -0.0243, 0.5003, -0.5256, 0.2257, -0.4993, -0
 [sub_resource type="BoxMesh" id="BoxMesh_2ch87"]
 size = Vector3(5, 0.8, 3)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jiqj0"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_462h3"]
 shading_mode = 0
+albedo_color = Color(1, 1, 1, 0.235294)
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_4n1xo"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_eli4d"]
 _surfaces = [{
 "aabb": AABB(-2.52887, -0.428868, -1.52887, 5.05773, 0.857745, 3.05774),
 "attribute_data": PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 171, 170, 42, 63, 0, 0, 0, 0, 171, 170, 170, 62, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 63, 171, 170, 42, 63, 0, 0, 0, 63, 171, 170, 170, 62, 0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 0, 63, 171, 170, 170, 62, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 63, 171, 170, 42, 63, 0, 0, 0, 0, 171, 170, 170, 62, 0, 0, 0, 63, 171, 170, 170, 62, 0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 128, 63, 171, 170, 42, 63, 0, 0, 0, 63, 171, 170, 170, 62, 0, 0, 128, 63, 171, 170, 170, 62, 0, 0, 0, 63, 171, 170, 42, 63, 0, 0, 0, 63, 171, 170, 42, 63, 0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 0, 63, 171, 170, 170, 62, 0, 0, 128, 63, 171, 170, 42, 63, 0, 0, 128, 63, 171, 170, 42, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63),
 "format": 34359742487,
 "index_count": 36,
 "index_data": PackedByteArray(0, 0, 4, 0, 2, 0, 2, 0, 4, 0, 6, 0, 1, 0, 5, 0, 3, 0, 3, 0, 5, 0, 7, 0, 8, 0, 12, 0, 10, 0, 10, 0, 12, 0, 14, 0, 9, 0, 13, 0, 11, 0, 11, 0, 13, 0, 15, 0, 16, 0, 20, 0, 18, 0, 18, 0, 20, 0, 22, 0, 17, 0, 21, 0, 19, 0, 19, 0, 21, 0, 23, 0),
-"material": SubResource("StandardMaterial3D_jiqj0"),
+"material": SubResource("StandardMaterial3D_462h3"),
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
 "vertex_count": 24,
@@ -44,14 +45,13 @@ surface_material_override/0 = SubResource("StandardMaterial3D_ixpyc")
 shape = SubResource("ConcavePolygonShape3D_0t8x1")
 
 [node name="Bed" type="MeshInstance3D" parent="." index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.251, 8.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.251, 8.45)
 mesh = SubResource("BoxMesh_2ch87")
 
 [node name="BedStaticBody" type="StaticBody3D" parent="Bed" index="0"]
 
-[node name="BedOutline" type="MeshInstance3D" parent="Bed/BedStaticBody" index="0"]
-cast_shadow = 3
-mesh = SubResource("ArrayMesh_4n1xo")
+[node name="OutlineMeshInstance3D" type="MeshInstance3D" parent="Bed/BedStaticBody" index="0"]
+mesh = SubResource("ArrayMesh_eli4d")
 skeleton = NodePath("../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Bed/BedStaticBody" index="1"]
