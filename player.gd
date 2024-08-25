@@ -15,6 +15,7 @@ const lerp_val = 0.15
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var speed = 5.0
 var dead = false
+var under_bed = false
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -39,7 +40,9 @@ func _physics_process(delta):
 	interact_range_indicator()
 	
 	if Input.is_action_pressed("Interact"):
-		if raycast.is_colliding() and "Bed" in raycast.get_collider().name:
+		if raycast.is_colliding() and "Bed" in raycast.get_collider().name and \
+			position.distance_to(raycast.get_collider().global_position) <= 3:
+			under_bed = true
 			print("under bed")
 	elif Input.is_action_pressed("Flashlight"):
 		flashlight.light_energy = 0.01
@@ -73,6 +76,8 @@ func _on_area_3d_body_entered(body):
 
 
 func interact_range_indicator():
-	if raycast.is_colliding() and "Bed" in raycast.get_collider().name and \
-		position.distance_to(raycast.get_collider().global_position) <= 3:
-		raycast.get_collider().scale = Vector3(1.1, 1.1, 1.1)
+	if raycast.is_colliding() and "Bed" in raycast.get_collider().name:
+		if position.distance_to(raycast.get_collider().global_position) <= 3:
+			raycast.get_collider().get_node("OutlineMeshInstance3D").show()
+		else:
+			raycast.get_collider().get_node("OutlineMeshInstance3D").hide()

@@ -51,6 +51,7 @@ mesh = SubResource("BoxMesh_2ch87")
 [node name="BedStaticBody" type="StaticBody3D" parent="Bed" index="0"]
 
 [node name="OutlineMeshInstance3D" type="MeshInstance3D" parent="Bed/BedStaticBody" index="0"]
+visible = false
 mesh = SubResource("ArrayMesh_eli4d")
 skeleton = NodePath("../..")
 
