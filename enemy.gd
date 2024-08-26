@@ -45,6 +45,8 @@ func _physics_process(delta):
 			$Armature/Skeleton3D/OmniLight3D.light_color = Color(0.313, 0.042, 0)
 			speed = 9.0
 			deaggro_timer.stop()
+			if player.under_bed and position.distance_to(player.position) <= 3.5:
+				player.dead = true
 		follow_player()
 	
 	anim_tree.set("parameters/BlendSpace1D/blend_position", velocity.length() / speed)
@@ -54,7 +56,7 @@ func _physics_process(delta):
 
 func follow_player():
 	var direction = Vector3.ZERO
-	#direction = (transform.basis * Vector3(player.position.x - position.x, 0, player.position.z - position.z)).normalized()
+	direction = (transform.basis * Vector3(player.position.x - position.x, 0, player.position.z - position.z)).normalized()
 	
 	if direction:
 		velocity.x = lerp(velocity.x, direction.x * speed, lerp_val)
