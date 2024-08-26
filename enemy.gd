@@ -22,20 +22,26 @@ func _ready():
 
 
 func _physics_process(delta):
+	# Enemy is passive
 	if passive:
 		speed = 0.0
 		velocity = Vector3.ZERO
 		$Armature/Skeleton3D/OmniLight3D.light_color = Color(0.149, 0.537, 0)
+	# Enemy neutral state
 	elif not aggro:
 		$Armature/Skeleton3D/OmniLight3D.light_color = Color(255, 255, 255)
 		speed = 3.0
+		# Player is near
 		if aggro_timer.is_stopped() and position.distance_to(player.position) <= 8:
 			follow_player()
+			# Start the aggro timer if the player is too close
 			if position.distance_to(player.position) <= 4:
 				aggro_timer.start()
 		else:
+			# Player is not near
 			velocity = Vector3.ZERO
 	else:
+		# Enemy is flashed
 		if flashed:
 			$Armature/Skeleton3D/OmniLight3D.light_color = Color(1, 1, 0.376)
 			speed = 2.0
@@ -45,6 +51,7 @@ func _physics_process(delta):
 			$Armature/Skeleton3D/OmniLight3D.light_color = Color(0.313, 0.042, 0)
 			speed = 9.0
 			deaggro_timer.stop()
+			# Kill player if the player is under the bed
 			if player.under_bed and position.distance_to(player.position) <= 3.5:
 				player.dead = true
 		follow_player()
@@ -69,7 +76,8 @@ func follow_player():
 
 
 func _on_aggro_timer_timeout():
-	if position.distance_to(player.position) <= 6:
+	# Player is too close
+	if position.distance_to(player.position) <= 5.5:
 		aggro = true
 	else:
 		aggro_timer.stop()

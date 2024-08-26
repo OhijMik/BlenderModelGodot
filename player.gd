@@ -3,7 +3,6 @@ extends CharacterBody3D
 @onready var armature = get_node("Armature")
 @onready var spring_arm_pivot = get_node("SpringArmPivot")
 @onready var spring_arm = get_node("SpringArmPivot/SpringArm3D")
-@onready var anim_tree = get_node("AnimationTree")
 @onready var flashlight = get_node("../DirectionalLight3D")
 @onready var raycast = get_node("SpringArmPivot/SpringArm3D/RayCast3D")
 @onready var enemy = get_node("../Enemy")
@@ -24,6 +23,7 @@ func _ready():
 
 
 func _unhandled_input(event):
+	# Mouse movement
 	if event is InputEventMouseMotion:
 		spring_arm_pivot.rotate_y(-event.relative.x * .005)
 		spring_arm.rotate_x(-event.relative.y * .005)
@@ -31,28 +31,32 @@ func _unhandled_input(event):
 
 
 func _physics_process(delta):
+	# Flashlight rotation
 	flashlight.rotation.y = spring_arm_pivot.rotation.y + 135
 	flashlight.rotation.x = spring_arm_pivot.rotation.x
 	flashlight.rotation.z = spring_arm_pivot.rotation.z
 	
+	# Direction
 	var input_dir = Input.get_vector("left", "right", "forward", "back")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	direction = direction.rotated(Vector3.UP, spring_arm_pivot.rotation.y)
 	raycast.add_exception($".")
 	interact_range_indicator()
-
+	
+	# Interact
 	if Input.is_action_just_pressed("Interact"):
-		if under_bed:
+		if under_bed:	# If the player was already under the bed, get out of the bed
 			spring_arm.position = Vector3(0, 1.785, 0)
 			position = last_pos
 			under_bed = false
 		elif raycast.is_colliding() and "Bed" in raycast.get_collider().name and \
 			position.distance_to(raycast.get_collider().global_position) <= 3.5:
+			# Go under the bed
 			under_bed = true
 			spring_arm.position = Vector3(0, 0.2, 0)
 			last_pos = position
 			position = Vector3(raycast.get_collider().global_position.x, 0, raycast.get_collider().global_position.z)
-	elif Input.is_action_pressed("Flashlight"):
+	elif Input.is_action_pressed("Flashlight"):		# Flashlight
 		flashlight.light_energy = 0.01
 		speed = 2.0
 		if raycast.is_colliding() and enemy == raycast.get_collider():
@@ -64,6 +68,7 @@ func _physics_process(delta):
 		speed = 5.0
 		enemy.flashed = false
 	
+	# Direction of the model
 	if direction:
 		velocity.x = lerp(velocity.x, direction.x * speed, lerp_val)
 		velocity.z = lerp(velocity.z, direction.z * speed, lerp_val)
@@ -72,8 +77,6 @@ func _physics_process(delta):
 	else:
 		velocity.x = lerp(velocity.x, 0.0, lerp_val)
 		velocity.z = lerp(velocity.z, 0.0, lerp_val)
-	
-	anim_tree.set("parameters/BlendSpace1D/blend_position", velocity.length() * speed)
 
 	move_and_slide()
 
