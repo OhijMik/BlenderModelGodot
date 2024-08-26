@@ -7,6 +7,7 @@ extends CharacterBody3D
 @onready var flashlight = get_node("../DirectionalLight3D")
 @onready var raycast = get_node("SpringArmPivot/SpringArm3D/RayCast3D")
 @onready var enemy = get_node("../Enemy")
+@onready var beds = [get_node("../map/Bed1"), get_node("../map/Bed2")]
 
 const JUMP_VELOCITY = 4.5
 const lerp_val = 0.15
@@ -16,6 +17,7 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var speed = 5.0
 var dead = false
 var under_bed = false
+var last_pos
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -38,12 +40,18 @@ func _physics_process(delta):
 	direction = direction.rotated(Vector3.UP, spring_arm_pivot.rotation.y)
 	raycast.add_exception($".")
 	interact_range_indicator()
-	
-	if Input.is_action_pressed("Interact"):
-		if raycast.is_colliding() and "Bed" in raycast.get_collider().name and \
-			position.distance_to(raycast.get_collider().global_position) <= 3:
+
+	if Input.is_action_just_pressed("Interact"):
+		if under_bed:
+			spring_arm.position = Vector3(0, 1.785, 0)
+			position = last_pos
+			under_bed = false
+		elif raycast.is_colliding() and "Bed" in raycast.get_collider().name and \
+			position.distance_to(raycast.get_collider().global_position) <= 3.5:
 			under_bed = true
-			print("under bed")
+			spring_arm.position = Vector3(0, 0.2, 0)
+			last_pos = position
+			position = Vector3(raycast.get_collider().global_position.x, 0, raycast.get_collider().global_position.z)
 	elif Input.is_action_pressed("Flashlight"):
 		flashlight.light_energy = 0.01
 		speed = 2.0
@@ -76,8 +84,13 @@ func _on_area_3d_body_entered(body):
 
 
 func interact_range_indicator():
-	if raycast.is_colliding() and "Bed" in raycast.get_collider().name:
-		if position.distance_to(raycast.get_collider().global_position) <= 3:
-			raycast.get_collider().get_node("OutlineMeshInstance3D").show()
+	if raycast.is_colliding():
+		if "Bed" in raycast.get_collider().name and position.distance_to(raycast.get_collider().global_position) <= 3.5:
+			for i in range(1, len(beds) + 1):
+				if "Bed" + str(i) in raycast.get_collider().get_parent().name:
+					var outline_path = "../map/" + "Bed" + str(i) +"/BedStaticBody/OutlineMeshInstance3D"
+					get_node(outline_path).show()
 		else:
-			raycast.get_collider().get_node("OutlineMeshInstance3D").hide()
+			for i in range(1, len(beds) + 1):
+				var outline_path = "../map/" + "Bed" + str(i) +"/BedStaticBody/OutlineMeshInstance3D"
+				get_node(outline_path).hide()
