@@ -19,3 +19,64 @@ surface_material_override/0 = SubResource("StandardMaterial3D_ixpyc")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Plane/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_ghr6d")
+
+[node name="RoomHallwayNumbers" type="Node3D" parent="." index="1"]
+
+[node name="Room1" type="Label3D" parent="RoomHallwayNumbers" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, -14.7969, 15.0513, 5.91877)
+pixel_size = 0.1
+text = "1"
+
+[node name="Room2" type="Label3D" parent="RoomHallwayNumbers" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, -14.7969, 15.0513, -4.52612)
+pixel_size = 0.1
+text = "2
+"
+
+[node name="Room3" type="Label3D" parent="RoomHallwayNumbers" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, 0.870407, 15.0513, 0.174082)
+pixel_size = 0.1
+text = "3"
+
+[node name="Room4" type="Label3D" parent="RoomHallwayNumbers" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, 31.4217, 15.0513, -0.957447)
+pixel_size = 0.1
+text = "4"
+
+[node name="Room5" type="Label3D" parent="RoomHallwayNumbers" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, 24.1973, 15.0513, 9.4004)
+pixel_size = 0.1
+text = "5
+"
+
+[node name="Room6" type="Label3D" parent="RoomHallwayNumbers" index="5"]
+transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, 26.9826, 15.0513, 28.0271)
+pixel_size = 0.1
+text = "6
+"
+
+[node name="Room7" type="Label3D" parent="RoomHallwayNumbers" index="6"]
+transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, 1.82786, 15.0513, 28.3753)
+pixel_size = 0.1
+text = "7
+"
+
+[node name="Room8" type="Label3D" parent="RoomHallwayNumbers" index="7"]
+transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, -0.870407, 15.0513, 40.1258)
+pixel_size = 0.1
+text = "8"
+
+[node name="Room9" type="Label3D" parent="RoomHallwayNumbers" index="8"]
+transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, 16.1025, 15.0513, 32.4662)
+pixel_size = 0.1
+text = "9"
+
+[node name="Hall1" type="Label3D" parent="RoomHallwayNumbers" index="9"]
+transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, 2.95938, 15.0513, 14.1006)
+pixel_size = 0.1
+text = "H1"
+
+[node name="Hall2" type="Label3D" parent="RoomHallwayNumbers" index="10"]
+transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, 17.9304, 15.0513, -2.26305)
+pixel_size = 0.1
+text = "H2"

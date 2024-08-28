@@ -5,7 +5,7 @@ extends CharacterBody3D
 @onready var spring_arm = get_node("SpringArmPivot/SpringArm3D")
 @onready var flashlight = get_node("../DirectionalLight3D")
 @onready var raycast = get_node("SpringArmPivot/SpringArm3D/RayCast3D")
-@onready var enemy = get_node("../Enemy")
+@onready var enemy = get_node("../map/Path3D/PathFollow3D/Enemy")
 @onready var tables = [get_node("../map/Table1"), get_node("../map/Table2")]
 
 const JUMP_VELOCITY = 4.5

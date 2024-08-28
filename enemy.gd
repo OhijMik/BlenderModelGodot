@@ -2,7 +2,7 @@ extends CharacterBody3D
 
 @onready var armature = get_node("Armature")
 @onready var anim_tree = get_node("AnimationTree")
-@onready var player = get_node("../Player")
+@onready var player = get_node("../../../../Player")
 @onready var aggro_timer = get_node("AggroTimer")
 @onready var deaggro_timer = get_node("DeaggroTimer")
 @onready var passive_timer = get_node("PassiveTimer")
@@ -15,6 +15,8 @@ var aggro = false
 var speed = 2.0
 var flashed = false
 var passive = false
+var room = 3
+var room_rng = RandomNumberGenerator.new()
 
 
 func _ready():
@@ -32,14 +34,14 @@ func _physics_process(delta):
 		$Armature/Skeleton3D/OmniLight3D.light_color = Color(255, 255, 255)
 		speed = 3.0
 		# Player is near
-		if aggro_timer.is_stopped() and position.distance_to(player.position) <= 8:
+		if aggro_timer.is_stopped() and position.distance_to(player.position) <= 0: # 8
 			follow_player()
 			# Start the aggro timer if the player is too close
 			if position.distance_to(player.position) <= 4:
 				aggro_timer.start()
 		else:
 			# Player is not near
-			velocity = Vector3.ZERO
+			_room_movement()
 	else:
 		# Enemy is flashed
 		if flashed:
@@ -73,6 +75,13 @@ func follow_player():
 	else:
 		velocity.x = lerp(velocity.x, 0.0, lerp_val)
 		velocity.z = lerp(velocity.z, 0.0, lerp_val)
+
+
+func _room_movement():
+	if room == 3:
+		var rand_num = room_rng.randi_range(0, 3)
+		if rand_num == 0:
+			pass
 
 
 func _on_aggro_timer_timeout():
