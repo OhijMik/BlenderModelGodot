@@ -65,30 +65,30 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.80097)
 
 [node name="map" parent="." instance=ExtResource("4_luyni")]
 
-[node name="Bed1" type="MeshInstance3D" parent="map"]
+[node name="Table1" type="MeshInstance3D" parent="map"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.251, 8.45)
 mesh = SubResource("BoxMesh_nosvv")
 
-[node name="BedStaticBody" type="StaticBody3D" parent="map/Bed1"]
+[node name="TableStaticBody" type="StaticBody3D" parent="map/Table1"]
 
-[node name="OutlineMeshInstance3D" type="MeshInstance3D" parent="map/Bed1/BedStaticBody"]
+[node name="OutlineMeshInstance3D" type="MeshInstance3D" parent="map/Table1/TableStaticBody"]
 visible = false
 mesh = SubResource("ArrayMesh_d0hig")
 skeleton = NodePath("../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="map/Bed1/BedStaticBody"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="map/Table1/TableStaticBody"]
 shape = SubResource("ConcavePolygonShape3D_fk4mm")
 
-[node name="Bed2" type="MeshInstance3D" parent="map"]
+[node name="Table2" type="MeshInstance3D" parent="map"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -8.5, 1.251, -1.632)
 mesh = SubResource("BoxMesh_nosvv")
 
-[node name="BedStaticBody" type="StaticBody3D" parent="map/Bed2"]
+[node name="TableStaticBody" type="StaticBody3D" parent="map/Table2"]
 
-[node name="OutlineMeshInstance3D" type="MeshInstance3D" parent="map/Bed2/BedStaticBody"]
+[node name="OutlineMeshInstance3D" type="MeshInstance3D" parent="map/Table2/TableStaticBody"]
 visible = false
 mesh = SubResource("ArrayMesh_d0hig")
 skeleton = NodePath("../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="map/Bed2/BedStaticBody"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="map/Table2/TableStaticBody"]
 shape = SubResource("ConcavePolygonShape3D_fk4mm")

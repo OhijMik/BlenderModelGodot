@@ -51,8 +51,8 @@ func _physics_process(delta):
 			$Armature/Skeleton3D/OmniLight3D.light_color = Color(0.313, 0.042, 0)
 			speed = 9.0
 			deaggro_timer.stop()
-			# Kill player if the player is under the bed
-			if player.under_bed and position.distance_to(player.position) <= 3.5:
+			# Kill player if the player is under the table
+			if player.under_table and position.distance_to(player.position) <= 3.5:
 				player.dead = true
 		follow_player()
 	

@@ -6,7 +6,7 @@ extends CharacterBody3D
 @onready var flashlight = get_node("../DirectionalLight3D")
 @onready var raycast = get_node("SpringArmPivot/SpringArm3D/RayCast3D")
 @onready var enemy = get_node("../Enemy")
-@onready var beds = [get_node("../map/Bed1"), get_node("../map/Bed2")]
+@onready var tables = [get_node("../map/Table1"), get_node("../map/Table2")]
 
 const JUMP_VELOCITY = 4.5
 const lerp_val = 0.15
@@ -15,7 +15,7 @@ const lerp_val = 0.15
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var speed = 5.0
 var dead = false
-var under_bed = false
+var under_table = false
 var last_pos
 
 func _ready():
@@ -45,14 +45,14 @@ func _physics_process(delta):
 	
 	# Interact
 	if Input.is_action_just_pressed("Interact"):
-		if under_bed:	# If the player was already under the bed, get out of the bed
+		if under_table:	# If the player was already under the table, get out of the table
 			spring_arm.position = Vector3(0, 1.785, 0)
 			position = last_pos
-			under_bed = false
-		elif raycast.is_colliding() and "Bed" in raycast.get_collider().name and \
+			under_table = false
+		elif raycast.is_colliding() and "Table" in raycast.get_collider().name and \
 			position.distance_to(raycast.get_collider().global_position) <= 3.5:
-			# Go under the bed
-			under_bed = true
+			# Go under the table
+			under_table = true
 			spring_arm.position = Vector3(0, 0.2, 0)
 			last_pos = position
 			position = Vector3(raycast.get_collider().global_position.x, 0, raycast.get_collider().global_position.z)
@@ -88,12 +88,12 @@ func _on_area_3d_body_entered(body):
 
 func interact_range_indicator():
 	if raycast.is_colliding():
-		if "Bed" in raycast.get_collider().name and position.distance_to(raycast.get_collider().global_position) <= 3.5:
-			for i in range(1, len(beds) + 1):
-				if "Bed" + str(i) in raycast.get_collider().get_parent().name:
-					var outline_path = "../map/" + "Bed" + str(i) +"/BedStaticBody/OutlineMeshInstance3D"
+		if "Table" in raycast.get_collider().name and position.distance_to(raycast.get_collider().global_position) <= 3.5:
+			for i in range(1, len(tables) + 1):
+				if "Table" + str(i) in raycast.get_collider().get_parent().name:
+					var outline_path = "../map/" + "Table" + str(i) +"/TableStaticBody/OutlineMeshInstance3D"
 					get_node(outline_path).show()
 		else:
-			for i in range(1, len(beds) + 1):
-				var outline_path = "../map/" + "Bed" + str(i) +"/BedStaticBody/OutlineMeshInstance3D"
+			for i in range(1, len(tables) + 1):
+				var outline_path = "../map/" + "Table" + str(i) +"/TableStaticBody/OutlineMeshInstance3D"
 				get_node(outline_path).hide()
