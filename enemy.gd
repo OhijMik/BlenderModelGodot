@@ -2,22 +2,23 @@ extends CharacterBody3D
 
 @onready var armature = get_node("Armature")
 @onready var anim_tree = get_node("AnimationTree")
-@onready var player = get_node("../../../../Player")
+@onready var player = get_node("../Player")
 @onready var aggro_timer = get_node("AggroTimer")
 @onready var deaggro_timer = get_node("DeaggroTimer")
 @onready var passive_timer = get_node("PassiveTimer")
 
 const lerp_val = 0.15
 
-# Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var aggro = false
 var speed = 2.0
 var flashed = false
 var passive = false
+
 var room = 3
 var room_rng = RandomNumberGenerator.new()
-
+var path = []
+var path_idx = 0
+@onready var nav = get_node("NavigationAgent3D")
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -35,15 +36,27 @@ func _physics_process(delta):
 		speed = 3.0
 		# Player is near
 		if aggro_timer.is_stopped() and position.distance_to(player.position) <= 0: # 8
-			follow_player()
+			follow_target(global_position)
 			# Start the aggro timer if the player is too close
 			if position.distance_to(player.position) <= 4:
 				aggro_timer.start()
 		else:
 			# Player is not near
-			_room_movement()
-	else:
-		# Enemy is flashed
+			# _room_movement()
+			#nav.get_current_navigation_path()
+			#nav.set_navigation_map($NavigationAgent3D/NavigationRegion3D.get_region_rid())
+			if path.size() > 0:
+				if path_idx >= path.size():
+					pass
+				elif global_transform.origin.distance_to(path[path_idx]) < 1:
+					path_idx += 1
+				else:
+					#var direction = path[path_idx] - global_transform.origin
+					#velocity = direction.normalized() * speed
+					#look_at(target_room)
+					print(path[path_idx])
+					follow_target(path[path_idx])
+	else:	# Enemy is aggro
 		if flashed:
 			$Armature/Skeleton3D/OmniLight3D.light_color = Color(1, 1, 0.376)
 			speed = 2.0
@@ -56,16 +69,16 @@ func _physics_process(delta):
 			# Kill player if the player is under the table
 			if player.under_table and position.distance_to(player.position) <= 3.5:
 				player.dead = true
-		follow_player()
+		follow_target(player.global_position)
 	
 	anim_tree.set("parameters/BlendSpace1D/blend_position", velocity.length() / speed)
 
 	move_and_slide()
 
 
-func follow_player():
+func follow_target(target_pos):
 	var direction = Vector3.ZERO
-	direction = (transform.basis * Vector3(player.position.x - position.x, 0, player.position.z - position.z)).normalized()
+	direction = (transform.basis * (target_pos - global_transform.origin)).normalized()
 	
 	if direction:
 		velocity.x = lerp(velocity.x, direction.x * speed, lerp_val)
@@ -75,6 +88,12 @@ func follow_player():
 	else:
 		velocity.x = lerp(velocity.x, 0.0, lerp_val)
 		velocity.z = lerp(velocity.z, 0.0, lerp_val)
+
+
+func get_room_path(room_pos):
+	nav.set_target_position(room_pos)
+	path = NavigationServer3D.map_get_path($NavigationAgent3D/NavigationRegion3D.get_navigation_map(), global_transform.origin, room_pos, true)
+	path_idx = 0
 
 
 func _room_movement():
@@ -102,3 +121,6 @@ func _on_passive_timer_timeout():
 	$Armature/Skeleton3D/OmniLight3D.light_color = Color(255, 255, 255)
 	passive = false
 	
+
+func _on_move_timer_timeout():
+	get_room_path(player.global_position)
