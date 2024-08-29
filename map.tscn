@@ -71,12 +71,12 @@ transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, 16.1025,
 pixel_size = 0.1
 text = "9"
 
-[node name="Hall1" type="Label3D" parent="RoomHallwayNumbers" index="9"]
-transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, 2.95938, 15.0513, 14.1006)
+[node name="Hall1(10)" type="Label3D" parent="RoomHallwayNumbers" index="9"]
+transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, 3.01865, 15.0513, 14.1006)
 pixel_size = 0.1
 text = "H1"
 
-[node name="Hall2" type="Label3D" parent="RoomHallwayNumbers" index="10"]
+[node name="Hall2(11)" type="Label3D" parent="RoomHallwayNumbers" index="10"]
 transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, 17.9304, 15.0513, -2.26305)
 pixel_size = 0.1
 text = "H2"

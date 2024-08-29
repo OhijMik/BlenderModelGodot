@@ -103,15 +103,25 @@ func get_room_path(room_pos):
 
 func get_target_room():
 	if cur_room == 3:
-		var rand_num = rng.randi_range(0, 0)
+		var rand_num = rng.randi_range(0, 3)
 		if rand_num == 0:	# Go to room 1
 			target_room = 1
 			get_room_path(Vector3(-14.8, 0, 5.9))
+		elif rand_num == 1:	# Go to room 2
+			target_room = 2
+			get_room_path(Vector3(-14.8, 0, -4.5))
+		elif rand_num == 2:	# Go to hall 1
+			target_room = 10
+			get_room_path(Vector3(3, 0, 14.1))
+		else:	# Go to hall 2
+			target_room = 11
+			get_room_path(Vector3(18, 0, 2.26))
 	elif cur_room == 1:
-		var rand_num = rng.randi_range(0, 0)
-		if rand_num == 0:	# Go to room 3
-			target_room = 3
-			get_room_path(Vector3(0, 0, 0))
+		target_room = 3	# Go to room 3
+		get_room_path(Vector3(0, 0, 0))
+	elif cur_room == 2:
+		target_room = 3	# Go to room 3
+		get_room_path(Vector3(0, 0, 0))
 
 
 func _on_aggro_timer_timeout():
@@ -134,4 +144,6 @@ func _on_passive_timer_timeout():
 	
 
 func _on_move_timer_timeout():
+	# Just for the first move to initialize the navigation
 	get_target_room()
+	
