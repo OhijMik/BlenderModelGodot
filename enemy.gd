@@ -6,16 +6,19 @@ extends CharacterBody3D
 @onready var aggro_timer = get_node("AggroTimer")
 @onready var deaggro_timer = get_node("DeaggroTimer")
 @onready var passive_timer = get_node("PassiveTimer")
+@onready var move_timer = get_node("MoveTimer")
 
 const lerp_val = 0.15
+
+var rng = RandomNumberGenerator.new()
 
 var aggro = false
 var speed = 2.0
 var flashed = false
 var passive = false
 
-var room = 3
-var room_rng = RandomNumberGenerator.new()
+var cur_room = 3
+var target_room = 3
 var path = []
 var path_idx = 0
 @onready var nav = get_node("NavigationAgent3D")
@@ -25,6 +28,7 @@ func _ready():
 
 
 func _physics_process(delta):
+	print(move_timer.time_left)
 	# Enemy is passive
 	if passive:
 		speed = 0.0
@@ -37,25 +41,26 @@ func _physics_process(delta):
 		# Player is near
 		if aggro_timer.is_stopped() and position.distance_to(player.position) <= 0: # 8
 			follow_target(global_position)
+			move_timer.stop()
 			# Start the aggro timer if the player is too close
 			if position.distance_to(player.position) <= 4:
 				aggro_timer.start()
 		else:
 			# Player is not near
-			# _room_movement()
-			#nav.get_current_navigation_path()
-			#nav.set_navigation_map($NavigationAgent3D/NavigationRegion3D.get_region_rid())
 			if path.size() > 0:
 				if path_idx >= path.size():
 					pass
 				elif global_transform.origin.distance_to(path[path_idx]) < 1:
 					path_idx += 1
 				else:
-					#var direction = path[path_idx] - global_transform.origin
-					#velocity = direction.normalized() * speed
-					#look_at(target_room)
-					print(path[path_idx])
-					follow_target(path[path_idx])
+					if nav.is_target_reached() and move_timer.is_stopped():		# Target location is reached
+						velocity = Vector3.ZERO
+						cur_room = target_room
+						get_target_room()
+						move_timer.wait_time = rng.randf_range(3.0, 6.0)
+						move_timer.start()
+					elif move_timer.is_stopped():	# After the wait time, move
+						follow_target(path[path_idx])
 	else:	# Enemy is aggro
 		if flashed:
 			$Armature/Skeleton3D/OmniLight3D.light_color = Color(1, 1, 0.376)
@@ -96,11 +101,17 @@ func get_room_path(room_pos):
 	path_idx = 0
 
 
-func _room_movement():
-	if room == 3:
-		var rand_num = room_rng.randi_range(0, 3)
-		if rand_num == 0:
-			pass
+func get_target_room():
+	if cur_room == 3:
+		var rand_num = rng.randi_range(0, 0)
+		if rand_num == 0:	# Go to room 1
+			target_room = 1
+			get_room_path(Vector3(-14.8, 0, 5.9))
+	elif cur_room == 1:
+		var rand_num = rng.randi_range(0, 0)
+		if rand_num == 0:	# Go to room 3
+			target_room = 3
+			get_room_path(Vector3(0, 0, 0))
 
 
 func _on_aggro_timer_timeout():
@@ -123,4 +134,4 @@ func _on_passive_timer_timeout():
 	
 
 func _on_move_timer_timeout():
-	get_room_path(player.global_position)
+	get_target_room()
