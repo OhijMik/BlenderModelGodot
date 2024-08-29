@@ -61,9 +61,10 @@ transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, -0.021
 shadow_opacity = 0.0
 
 [node name="Player" parent="." instance=ExtResource("1_aaq50")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.7436, 0, 5.58643)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.4158, 0, 40.9278)
 
 [node name="Enemy" parent="." instance=ExtResource("2_khl5j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.909103, 0, 41.3642)
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="Enemy"]
 

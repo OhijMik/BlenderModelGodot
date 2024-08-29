@@ -17,8 +17,8 @@ var speed = 2.0
 var flashed = false
 var passive = false
 
-var cur_room = 3
-var target_room = 3
+var cur_room = 8
+var target_room = cur_room
 var path = []
 var path_idx = 0
 @onready var nav = get_node("NavigationAgent3D")
@@ -102,7 +102,13 @@ func get_room_path(room_pos):
 
 
 func get_target_room():
-	if cur_room == 3:
+	if cur_room == 1:
+		target_room = 3		# Go to room 3
+		get_room_path(Vector3(0, 0, 0))
+	elif cur_room == 2:
+		target_room = 3		# Go to room 3
+		get_room_path(Vector3(0, 0, 0))
+	elif cur_room == 3:
 		var rand_num = rng.randi_range(0, 3)
 		if rand_num == 0:	# Go to room 1
 			target_room = 1
@@ -113,15 +119,67 @@ func get_target_room():
 		elif rand_num == 2:	# Go to hall 1
 			target_room = 10
 			get_room_path(Vector3(3, 0, 14.1))
-		else:	# Go to hall 2
+		else:				# Go to hall 2
 			target_room = 11
-			get_room_path(Vector3(18, 0, 2.26))
-	elif cur_room == 1:
-		target_room = 3	# Go to room 3
-		get_room_path(Vector3(0, 0, 0))
-	elif cur_room == 2:
-		target_room = 3	# Go to room 3
-		get_room_path(Vector3(0, 0, 0))
+			get_room_path(Vector3(18, 0, -2.26))
+	elif cur_room == 4:
+		target_room = 5		# Go to room 5
+		get_room_path(Vector3(24.1, 0, 9.4))
+	elif cur_room == 5:
+		var rand_num = rng.randi_range(0, 2)
+		if rand_num == 0:	# Go to hall 2
+			target_room = 11
+			get_room_path(Vector3(18, 0, -2.26))
+		elif rand_num == 1:	# Go to room 4
+			target_room = 4
+			get_room_path(Vector3(31.4, 0, -1))
+		else:				# Go to room 6
+			target_room = 6
+			get_room_path(Vector3(27, 0, 28))
+	elif cur_room == 6:
+		var rand_num = rng.randi_range(0, 1)
+		if rand_num == 0:	# Go to room 5
+			target_room = 5
+			get_room_path(Vector3(24.1, 0, 9.4))
+		else:				# Go to room 7
+			target_room = 7
+			get_room_path(Vector3(1.8, 0, 28.3))
+	elif cur_room == 7:
+		var rand_num = rng.randi_range(0, 3)
+		if rand_num == 0:	# Go to room 6
+			target_room = 6
+			get_room_path(Vector3(27, 0, 28))
+		elif rand_num == 1:	# Go to room 8
+			target_room = 8
+			get_room_path(Vector3(-0.9, 0, 40.1))
+		elif rand_num == 2:	# Go to room 9
+			target_room = 9
+			get_room_path(Vector3(16.1, 0, 32.5))
+		else:				# Go to hall 1
+			target_room = 10
+			get_room_path(Vector3(3, 0, 14.1))
+	elif cur_room == 8:
+		target_room = 7		# Go to room 7
+		get_room_path(Vector3(1.8, 0, 28.3))
+	elif cur_room == 9:
+		target_room = 7		# Go to room 7
+		get_room_path(Vector3(1.8, 0, 28.3))
+	elif cur_room == 10:
+		var rand_num = rng.randi_range(0, 1)
+		if rand_num == 0:	# Go to room 3
+			target_room = 3
+			get_room_path(Vector3(0, 0, 0))
+		else:				# Go to room 7
+			target_room = 7
+			get_room_path(Vector3(1.8, 0, 28.3))
+	else:
+		var rand_num = rng.randi_range(0, 1)
+		if rand_num == 0:	# Go to room 3
+			target_room = 3
+			get_room_path(Vector3(0, 0, 0))
+		else:				# Go to room 5
+			target_room = 5
+			get_room_path(Vector3(24.1, 0, 9.4))
 
 
 func _on_aggro_timer_timeout():
