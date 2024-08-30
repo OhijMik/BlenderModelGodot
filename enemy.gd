@@ -17,7 +17,7 @@ var speed = 2.0
 var flashed = false
 var passive = false
 
-var cur_room = 8
+var cur_room = 3
 var target_room = cur_room
 var path = []
 var path_idx = 0
@@ -28,7 +28,6 @@ func _ready():
 
 
 func _physics_process(delta):
-	print(move_timer.time_left)
 	# Enemy is passive
 	if passive:
 		speed = 0.0
@@ -43,7 +42,7 @@ func _physics_process(delta):
 			follow_target(player.position)
 			move_timer.stop()
 			# Start the aggro timer if the player is too close
-			if position.distance_to(player.position) <= 6:
+			if position.distance_to(player.position) <= 5:
 				aggro_timer.start()
 		elif not aggro_timer.is_stopped():
 			velocity = Vector3.ZERO
