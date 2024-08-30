@@ -39,14 +39,15 @@ func _physics_process(delta):
 		$Armature/Skeleton3D/OmniLight3D.light_color = Color(255, 255, 255)
 		speed = 3.0
 		# Player is near
-		if aggro_timer.is_stopped() and position.distance_to(player.position) <= 0: # 8
-			follow_target(global_position)
+		if aggro_timer.is_stopped() and position.distance_to(player.position) <= 12:
+			follow_target(player.position)
 			move_timer.stop()
 			# Start the aggro timer if the player is too close
-			if position.distance_to(player.position) <= 4:
+			if position.distance_to(player.position) <= 6:
 				aggro_timer.start()
-		else:
-			# Player is not near
+		elif not aggro_timer.is_stopped():
+			velocity = Vector3.ZERO
+		else:		# Player is not near
 			if path.size() > 0:
 				if path_idx >= path.size():
 					pass
@@ -184,9 +185,10 @@ func get_target_room():
 
 func _on_aggro_timer_timeout():
 	# Player is too close
-	if position.distance_to(player.position) <= 5.5:
+	if position.distance_to(player.position) <= 8:
 		aggro = true
 	else:
+		get_target_room()
 		aggro_timer.stop()
 
 

@@ -84,10 +84,10 @@ bind/16/bone = -1
 bind/16/pose = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, -1.0207)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pminx"]
-radius = 0.35
+radius = 1.0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_flnty"]
-radius = 0.34
+radius = 0.35
 
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_thwvj")
