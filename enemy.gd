@@ -57,7 +57,7 @@ func _physics_process(delta):
 						velocity = Vector3.ZERO
 						cur_room = target_room
 						get_target_room()
-						move_timer.wait_time = rng.randf_range(3.0, 6.0)
+						move_timer.wait_time = rng.randf_range(2.0, 5.0)
 						move_timer.start()
 					elif move_timer.is_stopped():	# After the wait time, move
 						follow_target(path[path_idx])
@@ -75,6 +75,11 @@ func _physics_process(delta):
 			if player.under_table and position.distance_to(player.position) <= 3.5:
 				player.dead = true
 		follow_target(player.global_position)
+	
+	if position.distance_to(player.position) <= 7:
+		$Armature/Skeleton3D/OmniLight3D.light_energy = 1
+	else:
+		$Armature/Skeleton3D/OmniLight3D.light_energy = 0
 	
 	anim_tree.set("parameters/BlendSpace1D/blend_position", velocity.length() / speed)
 

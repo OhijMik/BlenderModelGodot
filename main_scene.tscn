@@ -58,13 +58,14 @@ environment = SubResource("Environment_wm6k7")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, -0.0214421, 2.19311, 0)
+light_color = Color(0.00392157, 0, 0.713726, 1)
 shadow_opacity = 0.0
 
 [node name="Player" parent="." instance=ExtResource("1_aaq50")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.18853, 0, 5.01825)
 
 [node name="Enemy" parent="." instance=ExtResource("2_khl5j")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.45461, 0, -6.13642)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.84482, 0, -0.16541)
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="Enemy"]
 

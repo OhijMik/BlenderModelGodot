@@ -58,7 +58,7 @@ func _physics_process(delta):
 			last_pos = position
 			position = Vector3(raycast.get_collider().global_position.x, 0, raycast.get_collider().global_position.z)
 	elif Input.is_action_pressed("Flashlight"):		# Flashlight
-		flashlight.light_energy = 0.01
+		flashlight.light_energy = 0.05
 		speed = 2.0
 		if raycast.is_colliding() and enemy == raycast.get_collider():
 			enemy.flashed = true
@@ -89,13 +89,12 @@ func _on_area_3d_body_entered(body):
 
 func interact_range_indicator():
 	if raycast.is_colliding():
-		#if "Table" in raycast.get_collider().name and position.distance_to(raycast.get_collider().global_position) <= 3.5:
-			#for i in range(1, len(tables) + 1):
-				#if "Table" + str(i) in raycast.get_collider().get_parent().name:
-					#var outline_path = "../map/" + "Table" + str(i) +"/TableStaticBody/OutlineMeshInstance3D"
-					#get_node(outline_path).show()
-		#else:
-			#for i in range(1, len(tables) + 1):
-				#var outline_path = "../map/" + "Table" + str(i) +"/TableStaticBody/OutlineMeshInstance3D"
-				#get_node(outline_path).hide()
-		pass
+		if "Table" in raycast.get_collider().name and position.distance_to(raycast.get_collider().global_position) <= 3.5:
+			for i in range(1, len(tables) + 1):
+				if "Table" + str(i) in raycast.get_collider().get_parent().name:
+					var outline_path = "../Enemy/NavigationAgent3D/NavigationRegion3D/map/" + "Table" + str(i) +"/TableStaticBody/OutlineMeshInstance3D"
+					get_node(outline_path).show()
+		else:
+			for i in range(1, len(tables) + 1):
+				var outline_path = "../Enemy/NavigationAgent3D/NavigationRegion3D/map/" + "Table" + str(i) +"/TableStaticBody/OutlineMeshInstance3D"
+				get_node(outline_path).hide()
