@@ -15,3 +15,7 @@ func _process(delta):
 	
 	if player.dead:
 		get_tree().change_scene_to_file("res://death_scene.tscn")
+
+
+func _on_madness_inc_timer_timeout():
+	$UI/MadnessProgressBar.value += 1
