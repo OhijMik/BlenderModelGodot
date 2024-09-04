@@ -86,7 +86,7 @@ func _physics_process(delta):
 			speed = 8.0
 			deaggro_timer.stop()
 			# Kill player if the player is under the table
-			if player.under_table and position.distance_to(player.position) <= 3.5:
+			if player.under_table and position.distance_to(player.position) <= 4:
 				player.dead = true
 		follow_target(player.global_position)
 	

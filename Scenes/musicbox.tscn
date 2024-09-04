@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://61gomr5k2g3b"]
+
+[ext_resource type="PackedScene" uid="uid://dm6ixdkq52cra" path="res://Blender_files/musicbox.glb" id="1_b1evm"]
+
+[node name="musicbox" instance=ExtResource("1_b1evm")]
+transform = Transform3D(0.59, 0, 0, 0, 0.59, 0, 0, 0, 0.59, 0, 0, 0)
+
+[node name="Cylinder" parent="." index="1"]
+transform = Transform3D(0.05, 0, 0, 0, -8.74228e-09, -0.05, 0, 0.2, -2.18557e-09, 0, 0.5, 0.65912)

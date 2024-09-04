@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://b1fy42qy2720w"]
 
-[ext_resource type="PackedScene" uid="uid://dkaclyptu4mq1" path="res://map.blend" id="1_tkdqx"]
+[ext_resource type="PackedScene" uid="uid://dkaclyptu4mq1" path="res://Blender_files/map.blend" id="1_tkdqx"]
 [ext_resource type="Texture2D" uid="uid://b1xte310oau5p" path="res://kenney_prototype_textures/light/texture_04.png" id="2_oxla2"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ixpyc"]
