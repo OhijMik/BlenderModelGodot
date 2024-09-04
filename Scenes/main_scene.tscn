@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://2vxeqf41iwdd"]
+[gd_scene load_steps=14 format=3 uid="uid://2vxeqf41iwdd"]
 
 [ext_resource type="PackedScene" uid="uid://dm4gekwy6ps2g" path="res://Scenes/player.tscn" id="1_aaq50"]
 [ext_resource type="Script" path="res://Scripts/main_scene.gd" id="1_srulm"]
 [ext_resource type="PackedScene" uid="uid://dpeis3keb67mg" path="res://Scenes/enemy.tscn" id="2_khl5j"]
 [ext_resource type="PackedScene" uid="uid://b1fy42qy2720w" path="res://Scenes/map.tscn" id="4_luyni"]
+[ext_resource type="PackedScene" uid="uid://61gomr5k2g3b" path="res://Scenes/musicbox.tscn" id="5_vi3nb"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_3wum5"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -17,7 +18,6 @@ background_mode = 2
 background_color = Color(1, 1, 1, 1)
 sky = SubResource("Sky_a3ism")
 tonemap_mode = 2
-fog_enabled = true
 fog_light_color = Color(0, 0, 0, 1)
 fog_light_energy = 0.1
 fog_sun_scatter = 1.0
@@ -102,6 +102,9 @@ skeleton = NodePath("../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy/NavigationAgent3D/NavigationRegion3D/map/Table2/TableStaticBody"]
 shape = SubResource("ConcavePolygonShape3D_fk4mm")
+
+[node name="musicbox" parent="Enemy/NavigationAgent3D/NavigationRegion3D/map" instance=ExtResource("5_vi3nb")]
+transform = Transform3D(0.59, 0, 0, 0, 0.59, 0, 0, 0, 0.59, 4.33854, 0, -0.87954)
 
 [node name="UI" type="CanvasLayer" parent="."]
 
