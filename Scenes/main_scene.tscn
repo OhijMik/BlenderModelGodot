@@ -90,7 +90,7 @@ skeleton = NodePath("../..")
 shape = SubResource("ConcavePolygonShape3D_fk4mm")
 
 [node name="Table2" type="MeshInstance3D" parent="Enemy/NavigationAgent3D/NavigationRegion3D/map"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.251, -8.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.25, -8.5)
 mesh = SubResource("BoxMesh_nosvv")
 
 [node name="TableStaticBody" type="StaticBody3D" parent="Enemy/NavigationAgent3D/NavigationRegion3D/map/Table2"]
@@ -104,7 +104,7 @@ skeleton = NodePath("../..")
 shape = SubResource("ConcavePolygonShape3D_fk4mm")
 
 [node name="musicbox" parent="Enemy/NavigationAgent3D/NavigationRegion3D/map" instance=ExtResource("5_vi3nb")]
-transform = Transform3D(0.59, 0, 0, 0, 0.59, 0, 0, 0, 0.59, 4.33854, 0, -0.87954)
+transform = Transform3D(-2.57897e-08, 0, 0.59, 0, 0.59, 0, -0.59, 0, -2.57897e-08, 4.922, 1.65, -8.192)
 
 [node name="UI" type="CanvasLayer" parent="."]
 
