@@ -6,8 +6,8 @@ extends CharacterBody3D
 @onready var flashlight = get_node("../DirectionalLight3D")
 @onready var raycast = get_node("SpringArmPivot/SpringArm3D/RayCast3D")
 @onready var enemy = get_node("../Enemy")
-@onready var tables = [get_node("../Enemy/NavigationAgent3D/NavigationRegion3D/map/Table1"), \
-					   get_node("../Enemy/NavigationAgent3D/NavigationRegion3D/map/Table2")]
+@onready var tables = [get_node("../Enemy/NavigationAgent3D/NavigationRegion3D/map/table1"), \
+					   get_node("../Enemy/NavigationAgent3D/NavigationRegion3D/map/table2")]
 
 const JUMP_VELOCITY = 4.5
 const lerp_val = 0.15
@@ -88,13 +88,14 @@ func _on_area_3d_body_entered(body):
 
 
 func interact_range_indicator():
-	if raycast.is_colliding():
-		if "Table" in raycast.get_collider().name and position.distance_to(raycast.get_collider().global_position) <= 3.5:
-			for i in range(1, len(tables) + 1):
-				if "Table" + str(i) in raycast.get_collider().get_parent().name:
-					var outline_path = "../Enemy/NavigationAgent3D/NavigationRegion3D/map/" + "Table" + str(i) +"/TableStaticBody/OutlineMeshInstance3D"
-					get_node(outline_path).show()
-		else:
-			for i in range(1, len(tables) + 1):
-				var outline_path = "../Enemy/NavigationAgent3D/NavigationRegion3D/map/" + "Table" + str(i) +"/TableStaticBody/OutlineMeshInstance3D"
-				get_node(outline_path).hide()
+	#if raycast.is_colliding():
+		#if "table" in raycast.get_collider().name and position.distance_to(raycast.get_collider().global_position) <= 3.5:
+			#for i in range(1, len(tables) + 1):
+				#if "table" + str(i) in raycast.get_collider().get_parent().name:
+					#var outline_path = "../Enemy/NavigationAgent3D/NavigationRegion3D/map/" + "table" + str(i) +"/StaticBody3D/CollisionShape3D"
+					#get_node(outline_path).show()
+		#else:
+			#for i in range(1, len(tables) + 1):
+				#var outline_path = "../Enemy/NavigationAgent3D/NavigationRegion3D/map/" + "table" + str(i) +"/StaticBody3D/CollisionShape3D"
+				#get_node(outline_path).hide()
+	pass
