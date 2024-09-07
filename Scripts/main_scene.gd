@@ -14,7 +14,7 @@ func _process(delta):
 		get_tree().quit()
 	
 	if player.dead:
-		get_tree().change_scene_to_file("res://death_scene.tscn")
+		get_tree().change_scene_to_file("res://Scenes/death_scene.tscn")
 
 
 func _on_madness_inc_timer_timeout():

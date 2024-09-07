@@ -53,7 +53,7 @@ navigation_mesh = SubResource("NavigationMesh_ju8vp")
 [node name="map" parent="Enemy/NavigationAgent3D/NavigationRegion3D" instance=ExtResource("4_luyni")]
 
 [node name="musicbox" parent="Enemy/NavigationAgent3D/NavigationRegion3D/map" instance=ExtResource("5_vi3nb")]
-transform = Transform3D(-2.57897e-08, 0, 0.59, 0, 0.59, 0, -0.59, 0, -2.57897e-08, 3.726, 1.1, -7.434)
+transform = Transform3D(-2.57897e-08, 0, 0.59, 0, 0.59, 0, -0.59, 0, -2.57897e-08, 3.726, 1.15, -7.434)
 
 [node name="table1" parent="Enemy/NavigationAgent3D/NavigationRegion3D/map" instance=ExtResource("6_8hd5a")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 4.374, 0, -8.4)

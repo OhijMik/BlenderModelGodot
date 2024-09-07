@@ -10,6 +10,7 @@ extends CharacterBody3D
 					   get_node("../Enemy/NavigationAgent3D/NavigationRegion3D/map/table2"), \
 					   get_node("../Enemy/NavigationAgent3D/NavigationRegion3D/map/table3"), \
 					   get_node("../Enemy/NavigationAgent3D/NavigationRegion3D/map/table4")]
+@onready var musicbox = get_node("../Enemy/NavigationAgent3D/NavigationRegion3D/map/musicbox")
 
 const JUMP_VELOCITY = 4.5
 const lerp_val = 0.15
@@ -46,6 +47,9 @@ func _physics_process(delta):
 			spring_arm.position = Vector3(0, 0.2, 0)
 			last_pos = position
 			position = Vector3(raycast.get_collider().global_position.x, 0, raycast.get_collider().global_position.z)
+	elif Input.is_action_pressed("Interact") and raycast.get_collider().get_owner() == musicbox and \
+		 position.distance_to(raycast.get_collider().global_position) <= 2:
+		print("musicbox interact")
 	elif Input.is_action_pressed("Flashlight"):		# Flashlight
 		flashlight.light_energy = 0.05
 		speed = 2.0
@@ -98,7 +102,9 @@ func interact_range_indicator():
 			for i in tables:
 				if i == raycast.get_collider().get_owner():
 					i.get_node("Cube_001/Outline").show()
+		elif raycast.get_collider().get_owner() == musicbox and position.distance_to(raycast.get_collider().global_position) <= 2:
+			musicbox.get_node("Outline").show()
 		else:
 			for i in tables:
 				i.get_node("Cube_001/Outline").hide()
-				
+			musicbox.get_node("Outline").hide()
