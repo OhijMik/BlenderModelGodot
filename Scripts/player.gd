@@ -7,7 +7,9 @@ extends CharacterBody3D
 @onready var raycast = get_node("SpringArmPivot/SpringArm3D/RayCast3D")
 @onready var enemy = get_node("../Enemy")
 @onready var tables = [get_node("../Enemy/NavigationAgent3D/NavigationRegion3D/map/table1"), \
-					   get_node("../Enemy/NavigationAgent3D/NavigationRegion3D/map/table2")]
+					   get_node("../Enemy/NavigationAgent3D/NavigationRegion3D/map/table2"), \
+					   get_node("../Enemy/NavigationAgent3D/NavigationRegion3D/map/table3"), \
+					   get_node("../Enemy/NavigationAgent3D/NavigationRegion3D/map/table4")]
 
 const JUMP_VELOCITY = 4.5
 const lerp_val = 0.15
@@ -32,26 +34,13 @@ func _unhandled_input(event):
 
 
 func _physics_process(delta):
-	# Flashlight rotation
-	flashlight.rotation.y = spring_arm_pivot.rotation.y + 135
-	flashlight.rotation.x = spring_arm_pivot.rotation.x
-	flashlight.rotation.z = spring_arm_pivot.rotation.z
-	
-	# Direction
-	var input_dir = Input.get_vector("left", "right", "forward", "back")
-	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	direction = direction.rotated(Vector3.UP, spring_arm_pivot.rotation.y)
-	raycast.add_exception($".")
-	interact_range_indicator()
-	
 	# Interact
 	if Input.is_action_just_pressed("Interact"):
 		if under_table:	# If the player was already under the table, get out of the table
 			spring_arm.position = Vector3(0, 1.785, 0)
 			position = last_pos
 			under_table = false
-		elif raycast.is_colliding() and "Table" in raycast.get_collider().name and \
-			position.distance_to(raycast.get_collider().global_position) <= 3.5:
+		elif raycast.get_collider().get_owner() in tables and position.distance_to(raycast.get_collider().global_position) <= 4:
 			# Go under the table
 			under_table = true
 			spring_arm.position = Vector3(0, 0.2, 0)
@@ -69,6 +58,24 @@ func _physics_process(delta):
 		speed = 5.0
 		enemy.flashed = false
 	
+	direction()
+
+	move_and_slide()
+
+
+func direction():
+	# Flashlight rotation
+	flashlight.rotation.y = spring_arm_pivot.rotation.y + 135
+	flashlight.rotation.x = spring_arm_pivot.rotation.x
+	flashlight.rotation.z = spring_arm_pivot.rotation.z
+	
+	# Direction
+	var input_dir = Input.get_vector("left", "right", "forward", "back")
+	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	direction = direction.rotated(Vector3.UP, spring_arm_pivot.rotation.y)
+	raycast.add_exception($".")
+	interact_range_indicator()
+	
 	# Direction of the model
 	if direction:
 		velocity.x = lerp(velocity.x, direction.x * speed, lerp_val)
@@ -78,9 +85,7 @@ func _physics_process(delta):
 	else:
 		velocity.x = lerp(velocity.x, 0.0, lerp_val)
 		velocity.z = lerp(velocity.z, 0.0, lerp_val)
-
-	move_and_slide()
-
+	
 
 func _on_area_3d_body_entered(body):
 	if body == enemy:
@@ -88,14 +93,12 @@ func _on_area_3d_body_entered(body):
 
 
 func interact_range_indicator():
-	#if raycast.is_colliding():
-		#if "table" in raycast.get_collider().name and position.distance_to(raycast.get_collider().global_position) <= 3.5:
-			#for i in range(1, len(tables) + 1):
-				#if "table" + str(i) in raycast.get_collider().get_parent().name:
-					#var outline_path = "../Enemy/NavigationAgent3D/NavigationRegion3D/map/" + "table" + str(i) +"/StaticBody3D/CollisionShape3D"
-					#get_node(outline_path).show()
-		#else:
-			#for i in range(1, len(tables) + 1):
-				#var outline_path = "../Enemy/NavigationAgent3D/NavigationRegion3D/map/" + "table" + str(i) +"/StaticBody3D/CollisionShape3D"
-				#get_node(outline_path).hide()
-	pass
+	if raycast.is_colliding():
+		if raycast.get_collider().get_owner() in tables and position.distance_to(raycast.get_collider().global_position) <= 4:
+			for i in tables:
+				if i == raycast.get_collider().get_owner():
+					i.get_node("Cube_001/Outline").show()
+		else:
+			for i in tables:
+				i.get_node("Cube_001/Outline").hide()
+				

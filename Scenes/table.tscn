@@ -24,12 +24,11 @@ data = PackedVector3Array(-1, -1, 1, -1, 1, -1, -1, 1, 1, -1, -1, 1, -1, -1, -1,
 [node name="table" instance=ExtResource("1_si4pp")]
 
 [node name="Outline" type="MeshInstance3D" parent="Cube_001" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+visible = false
 material_override = SubResource("StandardMaterial3D_wt2mr")
 mesh = SubResource("ArrayMesh_eul0t")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Cube_001" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Cube_001/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_etym3")
