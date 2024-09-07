@@ -1,5 +1,8 @@
 extends Node3D
 
+@onready var model_anim = get_node("AnimationPlayer")
+@onready var handle_anim = get_node("HandleAnimationPlayer")
+@onready var timer = get_node("PlayTimer")
 
 var playing = false
 
@@ -11,4 +14,13 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	if playing and timer.is_stopped():
+		timer.start()
+		model_anim.play("model")
+		handle_anim.play("handle")
+
+
+func _on_play_timer_timeout():
+	model_anim.stop()
+	handle_anim.stop()
+	visible = false

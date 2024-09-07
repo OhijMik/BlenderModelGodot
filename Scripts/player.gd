@@ -49,7 +49,7 @@ func _physics_process(delta):
 			position = Vector3(raycast.get_collider().global_position.x, 0, raycast.get_collider().global_position.z)
 	elif Input.is_action_pressed("Interact") and raycast.get_collider().get_owner() == musicbox and \
 		 position.distance_to(raycast.get_collider().global_position) <= 2:
-		print("musicbox interact")
+		musicbox.playing = true
 	elif Input.is_action_pressed("Flashlight"):		# Flashlight
 		flashlight.light_energy = 0.05
 		speed = 2.0
@@ -103,8 +103,8 @@ func interact_range_indicator():
 				if i == raycast.get_collider().get_owner():
 					i.get_node("Cube_001/Outline").show()
 		elif raycast.get_collider().get_owner() == musicbox and position.distance_to(raycast.get_collider().global_position) <= 2:
-			musicbox.get_node("Outline").show()
+			musicbox.get_node("Cube/outline").show()
 		else:
 			for i in tables:
 				i.get_node("Cube_001/Outline").hide()
-			musicbox.get_node("Outline").hide()
+			musicbox.get_node("Cube/outline").hide()
