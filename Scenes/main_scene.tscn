@@ -95,7 +95,7 @@ offset_left = 327.0
 offset_top = 528.0
 offset_right = 830.0
 offset_bottom = 563.0
-max_value = 2.5
+max_value = 5.0
 show_percentage = false
 
 [connection signal="timeout" from="UI/MadnessIncTimer" to="." method="_on_madness_inc_timer_timeout"]

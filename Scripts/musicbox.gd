@@ -5,18 +5,15 @@ extends Node3D
 @onready var timer = get_node("PlayTimer")
 @onready var bar = get_node("../../../../../UI/SongProgressBar")
 
+var rng = RandomNumberGenerator.new()
+
 var playing = false
 
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+var cur_pos_num = 1
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	print(playing)
-	bar.value = 2.5 - timer.time_left
+	bar.value = 5.0 - timer.time_left	# Changing the bar value
 	if playing and timer.is_stopped():
 		timer.start()
 		model_anim.play("model")
@@ -29,9 +26,24 @@ func _process(delta):
 		bar.hide()
 
 
+func musicbox_spawn():
+	var rand_num = rng.randi_range(1, 2)
+	while rand_num == cur_pos_num:
+		rand_num = rng.randi_range(1, 2)
+	if rand_num == 1:
+		position = Vector3(3.7, 1.15, -7.4)
+		rotation.y = PI/2
+		cur_pos_num = 1
+	elif rand_num == 2:
+		position = Vector3(-18.5, 0.05, -6.6)
+		rotation.y = PI
+		cur_pos_num = 2
+
+
 func _on_play_timer_timeout():
 	model_anim.stop()
 	handle_anim.stop()
-	visible = false
 	playing = false
 	bar.hide()
+	position = Vector3(0, 0, 10)
+	musicbox_spawn()

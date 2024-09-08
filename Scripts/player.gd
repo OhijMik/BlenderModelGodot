@@ -12,7 +12,6 @@ extends CharacterBody3D
 					   get_node("../Enemy/NavigationAgent3D/NavigationRegion3D/map/table4")]
 @onready var musicbox = get_node("../Enemy/NavigationAgent3D/NavigationRegion3D/map/musicbox")
 
-const JUMP_VELOCITY = 4.5
 const lerp_val = 0.15
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -31,7 +30,8 @@ func _unhandled_input(event):
 	if event is InputEventMouseMotion:
 		spring_arm_pivot.rotate_y(-event.relative.x * .005)
 		spring_arm.rotate_x(-event.relative.y * .005)
-		spring_arm.rotation.x = clamp(spring_arm.rotation.x, -PI/4, PI/4)
+		# how much we can look up or down
+		spring_arm.rotation.x = clamp(spring_arm.rotation.x, -PI/2, PI/2)
 
 
 func _physics_process(delta):
@@ -48,12 +48,13 @@ func _physics_process(delta):
 			spring_arm.position = Vector3(0, 0.2, 0)
 			last_pos = position
 			position = Vector3(raycast.get_collider().global_position.x, 0, raycast.get_collider().global_position.z)
-	elif Input.is_action_pressed("Interact"):
-		if raycast.get_collider() != null and \
-				raycast.get_collider().get_owner() == musicbox and \
+	elif Input.is_action_pressed("Interact"):	# holding interact
+		# looking at the musicbox while holding interact
+		if raycast.get_collider() != null and raycast.get_collider().get_owner() == musicbox and \
 				position.distance_to(raycast.get_collider().global_position) <= 2:
 			musicbox.playing = true
-		else:
+		else:	
+			# If you stop looking at the musicbox while holding interact
 			musicbox.playing = false
 	elif Input.is_action_pressed("Flashlight"):		# Flashlight
 		flashlight.light_energy = 0.05
@@ -103,7 +104,7 @@ func _on_area_3d_body_entered(body):
 
 
 func interact_range_indicator():
-	if raycast.is_colliding():
+	if raycast.is_colliding() and raycast.get_collider():
 		if raycast.get_collider().get_owner() in tables and position.distance_to(raycast.get_collider().global_position) <= 4:
 			for i in tables:
 				if i == raycast.get_collider().get_owner():

@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://61gomr5k2g3b"]
 
 [ext_resource type="PackedScene" uid="uid://dm6ixdkq52cra" path="res://Blender_files/musicbox.glb" id="1_b1evm"]
-[ext_resource type="Script" path="res://Scenes/musicbox.gd" id="2_4bgw5"]
+[ext_resource type="Script" path="res://Scripts/musicbox.gd" id="2_7lnx1"]
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_oexie"]
 data = PackedVector3Array(-1, -0.9932, 1, -1, 1.0068, -1, -1, 1.0068, 1, -1, -0.9932, 1, -1, -0.9932, -1, -1, 1.0068, -1, -1, -0.9932, -1, 1, 1.0068, -1, -1, 1.0068, -1, -1, -0.9932, -1, 1, -0.9932, -1, 1, 1.0068, -1, 1, -0.9932, -1, 1, 1.0068, 1, 1, 1.0068, -1, 1, -0.9932, -1, 1, -0.9932, 1, 1, 1.0068, 1, 1, -0.9932, 1, -1, 1.0068, 1, 1, 1.0068, 1, 1, -0.9932, 1, -1, -0.9932, 1, -1, 1.0068, 1, -1, -0.9932, -1, 1, -0.9932, 1, 1, -0.9932, -1, -1, -0.9932, -1, -1, -0.9932, 1, 1, -0.9932, 1, 1, 1.0068, -1, -1, 1.0068, 1, -1, 1.0068, -1, 1, 1.0068, -1, 1, 1.0068, 1, -1, 1.0068, 1)
@@ -28,6 +28,7 @@ data = PackedVector3Array(0, 1.1707, -0.1003, 0.1688, 1.0573, -0.1209, 0, 0.9835
 [sub_resource type="Animation" id="Animation_ypyte"]
 resource_name = "handle"
 length = 2.5
+loop_mode = 1
 tracks/0/type = "rotation_3d"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -43,7 +44,7 @@ _data = {
 
 [node name="musicbox" instance=ExtResource("1_b1evm")]
 transform = Transform3D(0.59, 0, 0, 0, 0.59, 0, 0, 0, 0.59, 0, 0, 0)
-script = ExtResource("2_4bgw5")
+script = ExtResource("2_7lnx1")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Cube" index="0"]
 
@@ -58,7 +59,7 @@ mesh = SubResource("ArrayMesh_1f73s")
 transform = Transform3D(0.05, 0, 0, 0, -8.74228e-09, -0.05, 0, 0.2, -2.18557e-09, 0, 0.5, 0.65912)
 
 [node name="Cube_001" parent="." index="3"]
-transform = Transform3D(-8.14603e-08, 0, -0.5, 0, 0.5, 0, 0.5, 0, -8.14603e-08, 0, 1.06898, 0)
+transform = Transform3D(-2.18557e-08, 0, -0.5, 0, 0.5, 0, 0.5, 0, -2.18557e-08, 0, 1.06898, 0)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Cube_001" index="0"]
 
@@ -71,7 +72,6 @@ libraries = {
 }
 
 [node name="PlayTimer" type="Timer" parent="." index="6"]
-wait_time = 2.5
 one_shot = true
 
 [connection signal="timeout" from="PlayTimer" to="." method="_on_play_timer_timeout"]
