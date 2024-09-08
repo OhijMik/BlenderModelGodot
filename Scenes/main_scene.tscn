@@ -43,7 +43,7 @@ shadow_opacity = 0.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.64923, 0, -3.12463)
 
 [node name="Enemy" parent="." instance=ExtResource("2_khl5j")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.84482, 0, -0.16541)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.7773, 0, -0.924571)
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="Enemy"]
 
@@ -88,5 +88,14 @@ show_percentage = false
 
 [node name="MadnessIncTimer" type="Timer" parent="UI"]
 autostart = true
+
+[node name="SongProgressBar" type="ProgressBar" parent="UI"]
+visible = false
+offset_left = 327.0
+offset_top = 528.0
+offset_right = 830.0
+offset_bottom = 563.0
+max_value = 2.5
+show_percentage = false
 
 [connection signal="timeout" from="UI/MadnessIncTimer" to="." method="_on_madness_inc_timer_timeout"]

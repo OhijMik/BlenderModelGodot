@@ -41,15 +41,20 @@ func _physics_process(delta):
 			spring_arm.position = Vector3(0, 1.785, 0)
 			position = last_pos
 			under_table = false
-		elif raycast.get_collider().get_owner() in tables and position.distance_to(raycast.get_collider().global_position) <= 4:
+		elif raycast.get_collider() != null and raycast.get_collider().get_owner() in tables and \
+				position.distance_to(raycast.get_collider().global_position) <= 4:
 			# Go under the table
 			under_table = true
 			spring_arm.position = Vector3(0, 0.2, 0)
 			last_pos = position
 			position = Vector3(raycast.get_collider().global_position.x, 0, raycast.get_collider().global_position.z)
-	elif Input.is_action_pressed("Interact") and raycast.get_collider().get_owner() == musicbox and \
-		 position.distance_to(raycast.get_collider().global_position) <= 2:
-		musicbox.playing = true
+	elif Input.is_action_pressed("Interact"):
+		if raycast.get_collider() != null and \
+				raycast.get_collider().get_owner() == musicbox and \
+				position.distance_to(raycast.get_collider().global_position) <= 2:
+			musicbox.playing = true
+		else:
+			musicbox.playing = false
 	elif Input.is_action_pressed("Flashlight"):		# Flashlight
 		flashlight.light_energy = 0.05
 		speed = 2.0
@@ -61,6 +66,7 @@ func _physics_process(delta):
 		flashlight.light_energy = 0
 		speed = 5.0
 		enemy.flashed = false
+		musicbox.playing = false
 	
 	direction()
 
