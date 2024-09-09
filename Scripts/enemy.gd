@@ -16,7 +16,13 @@ var aggro = false
 var speed = 2.0
 var flashed = false
 var passive = false
+
 var non_aggro_speed = 3.0
+var aggro_speed = 8.0
+var move_time_min = 1.0
+var move_time_max = 3.0
+var long_move_time_min = 3.0
+var long_move_time_max = 5.0
 
 var cur_room = 3
 var target_room = cur_room
@@ -26,9 +32,6 @@ var path_idx = 0
 
 var madness = 1
 @onready var madness_timer = get_node("MadnessTimer")
-
-var move_time_min = 1.0
-var move_time_max = 3.0
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -74,7 +77,7 @@ func _physics_process(delta):
 						if not player.under_table:
 							move_timer.wait_time = rng.randf_range(move_time_min, move_time_max)
 						else:
-							move_timer.wait_time = rng.randf_range(move_time_min + 3, move_time_max + 3)
+							move_timer.wait_time = rng.randf_range(long_move_time_min, long_move_time_max)
 						move_timer.start()
 					elif move_timer.is_stopped():	# After the wait time, move
 						follow_target(path[path_idx])
@@ -86,7 +89,7 @@ func _physics_process(delta):
 				deaggro_timer.start()
 		else:
 			$Armature/Skeleton3D/OmniLight3D.light_color = Color(0.313, 0.042, 0)
-			speed = 8.0
+			speed = aggro_speed
 			deaggro_timer.stop()
 			# Kill player if the player is under the table
 			if player.under_table and position.distance_to(player.position) <= 4:
@@ -211,9 +214,14 @@ func madness_check():
 		deaggro_timer.wait_time = 2.5
 		passive_timer.wait_time = 1.5
 		madness_timer.wait_time = 20
+		
+		move_time_min = 1.0
+		move_time_min = 3.0
+		long_move_time_min = 3.0
+		long_move_time_max = 5.0
+		
 		non_aggro_speed = 3.0
-		move_time_min = 2.0
-		move_time_min = 5.0
+		aggro_speed = 8.0
 		$"../UI/MadnessProgressBar".max_value = 20
 		$"../WorldEnvironment".environment.fog_density = 0.5
 	elif madness == 2:
@@ -221,9 +229,13 @@ func madness_check():
 		deaggro_timer.wait_time = 2.5
 		passive_timer.wait_time = 1.0
 		madness_timer.wait_time = 20
+		
+		move_time_min = 1.0
+		move_time_min = 3.0
+		long_move_time_min = 3.0
+		long_move_time_max = 5.0
+		
 		non_aggro_speed = 3.5
-		move_time_min = 2.0
-		move_time_min = 4.5
 		$"../UI/MadnessProgressBar".max_value = 20
 		$"../WorldEnvironment".environment.fog_density = 0.6
 	elif madness == 3:
@@ -231,9 +243,14 @@ func madness_check():
 		deaggro_timer.wait_time = 3.0
 		passive_timer.wait_time = 0.5
 		madness_timer.wait_time = 15
+		
+		move_time_min = 1.0
+		move_time_min = 2.5
+		long_move_time_min = 3.0
+		long_move_time_max = 4.5
+		
 		non_aggro_speed = 4.5
-		move_time_min = 1.5
-		move_time_min = 4.5
+		aggro_speed = 8.5
 		$"../UI/MadnessProgressBar".max_value = 15
 		$"../WorldEnvironment".environment.fog_density = 0.7
 	elif madness == 4:
@@ -241,19 +258,29 @@ func madness_check():
 		deaggro_timer.wait_time = 3.0
 		passive_timer.wait_time = 0.5
 		madness_timer.wait_time = 15
+
+		move_time_min = 0.5
+		move_time_min = 2.0
+		long_move_time_min = 2.5
+		long_move_time_max = 4.5
+		
 		non_aggro_speed = 5.0
-		move_time_min = 1.5
-		move_time_min = 3.5
+		aggro_speed = 9.0
 		$"../UI/MadnessProgressBar".max_value = 15
 		$"../WorldEnvironment".environment.fog_density = 0.8
 	else:
 		aggro_timer.wait_time = 0.1
 		deaggro_timer.wait_time = 100.0
 		passive_timer.wait_time = 0.1
-		non_aggro_speed = 6.0
 		madness_timer.stop()
+		
 		move_time_min = 0.5
 		move_time_min = 1.0
+		long_move_time_min = 0.5
+		long_move_time_max = 1.0
+		
+		non_aggro_speed = 6.0
+		aggro_speed = 15.0
 		aggro = true
 		$"../UI/MadnessProgressBar".value = 15
 		$"../WorldEnvironment".environment.fog_density = 1

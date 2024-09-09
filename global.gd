@@ -1,3 +1,3 @@
 extends Node2D
 
-var required_musicbox = 1
+var required_musicbox = 5
