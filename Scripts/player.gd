@@ -104,21 +104,23 @@ func _on_area_3d_body_entered(body):
 
 
 func interact_range_indicator():
-	if raycast.is_colliding() and raycast.get_collider():
+	if raycast.is_colliding() and raycast.get_collider():	# Only show outline if raycast is colliding
+		# If you are in range of the table, show the table outline, hide musicbox outline
 		if raycast.get_collider().get_owner() in tables and position.distance_to(raycast.get_collider().global_position) <= 4:
 			for i in tables:
 				if i == raycast.get_collider().get_owner():
 					i.get_node("Cube_001/Outline").show()
-					musicbox.get_node("Cube/outline").hide()
+			musicbox.get_node("Cube/outline").hide()
 		elif raycast.get_collider().get_owner() == musicbox and position.distance_to(raycast.get_collider().global_position) <= 2:
+			# If you are in range of the musicbox, show the musicbox outline, hide the table outline
 			musicbox.get_node("Cube/outline").show()
 			for i in tables:
 				i.get_node("Cube_001/Outline").hide()
-		else:
+		else:	# If raycast is colliding with anything but the musicbox and the table
 			for i in tables:
 				i.get_node("Cube_001/Outline").hide()
 			musicbox.get_node("Cube/outline").hide()
-	else:
+	else:	# Not colliding with anything
 		for i in tables:
 			i.get_node("Cube_001/Outline").hide()
 		musicbox.get_node("Cube/outline").hide()

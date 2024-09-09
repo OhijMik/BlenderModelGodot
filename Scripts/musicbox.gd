@@ -68,4 +68,5 @@ func _on_play_timer_timeout():
 	playing = false
 	bar.hide()
 	position = Vector3(0, 0, 10)
+	global.required_musicbox -= 1
 	musicbox_spawn()

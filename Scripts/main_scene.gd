@@ -7,6 +7,9 @@ func _process(delta):
 	if Input.is_action_just_pressed("quit"):
 		get_tree().quit()
 	
+	if global.required_musicbox <= 0:
+		get_tree().change_scene_to_file("res://Scenes/win_scene.tscn")
+	
 	if player.dead:
 		get_tree().change_scene_to_file("res://Scenes/death_scene.tscn")
 
