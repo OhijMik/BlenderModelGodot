@@ -27,8 +27,8 @@ var path_idx = 0
 var madness = 1
 @onready var madness_timer = get_node("MadnessTimer")
 
-var move_time_min = 2.0
-var move_time_max = 5.0
+var move_time_min = 1.0
+var move_time_max = 3.0
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -71,7 +71,10 @@ func _physics_process(delta):
 						velocity = Vector3.ZERO
 						cur_room = target_room
 						get_target_room()
-						move_timer.wait_time = rng.randf_range(move_time_min, move_time_max)
+						if not player.under_table:
+							move_timer.wait_time = rng.randf_range(move_time_min, move_time_max)
+						else:
+							move_timer.wait_time = rng.randf_range(move_time_min + 3, move_time_max + 3)
 						move_timer.start()
 					elif move_timer.is_stopped():	# After the wait time, move
 						follow_target(path[path_idx])

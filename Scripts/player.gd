@@ -109,9 +109,16 @@ func interact_range_indicator():
 			for i in tables:
 				if i == raycast.get_collider().get_owner():
 					i.get_node("Cube_001/Outline").show()
+					musicbox.get_node("Cube/outline").hide()
 		elif raycast.get_collider().get_owner() == musicbox and position.distance_to(raycast.get_collider().global_position) <= 2:
 			musicbox.get_node("Cube/outline").show()
+			for i in tables:
+				i.get_node("Cube_001/Outline").hide()
 		else:
 			for i in tables:
 				i.get_node("Cube_001/Outline").hide()
 			musicbox.get_node("Cube/outline").hide()
+	else:
+		for i in tables:
+			i.get_node("Cube_001/Outline").hide()
+		musicbox.get_node("Cube/outline").hide()

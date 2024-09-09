@@ -52,6 +52,7 @@ script = ExtResource("2_7lnx1")
 shape = SubResource("ConcavePolygonShape3D_oexie")
 
 [node name="outline" type="MeshInstance3D" parent="Cube" index="1"]
+visible = false
 material_override = SubResource("StandardMaterial3D_a8dt7")
 mesh = SubResource("ArrayMesh_1f73s")
 

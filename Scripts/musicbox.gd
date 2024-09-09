@@ -12,6 +12,14 @@ var playing = false
 var cur_pos_num = 1
 
 
+func _ready():
+	# musicbox_spawn()
+	#position = Vector3(-17.8, 0.05, 9)
+	#rotation.y = 5 * PI/4
+	#cur_pos_num = 3
+	pass
+
+
 func _process(delta):
 	bar.value = 5.0 - timer.time_left	# Changing the bar value
 	if playing and timer.is_stopped():
@@ -27,17 +35,31 @@ func _process(delta):
 
 
 func musicbox_spawn():
-	var rand_num = rng.randi_range(1, 2)
+	var rand_num = rng.randi_range(1, 7)
 	while rand_num == cur_pos_num:
 		rand_num = rng.randi_range(1, 2)
 	if rand_num == 1:
 		position = Vector3(3.7, 1.15, -7.4)
 		rotation.y = PI/2
-		cur_pos_num = 1
 	elif rand_num == 2:
 		position = Vector3(-18.5, 0.05, -6.6)
 		rotation.y = PI
-		cur_pos_num = 2
+	elif rand_num == 3:
+		position = Vector3(-17.8, 0.05, 9)
+		rotation.y = 5*PI/4
+	elif rand_num == 4:
+		position = Vector3(30.3, 1.15, -3.7)
+		rotation.y = PI/2
+	elif rand_num == 5:
+		position = Vector3(26.4, 1.15, 35)
+		rotation.y = 3*PI/2
+	elif rand_num == 6:
+		position = Vector3(18, 0.05, 36.7)
+		rotation.y = 7*PI/4
+	elif rand_num == 7:
+		position = Vector3(0, 1.15, 41.4)
+		rotation.y = PI/2
+	cur_pos_num = rand_num
 
 
 func _on_play_timer_timeout():
