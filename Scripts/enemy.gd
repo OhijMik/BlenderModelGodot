@@ -14,12 +14,13 @@ const lerp_val = 0.15
 var rng = RandomNumberGenerator.new()
 
 var aggro = false
-var speed = 2.0
+var speed = 3.0
 var flashed = false
 var passive = false
 
 var non_aggro_speed = 3.0
 var aggro_speed = 8.0
+var flashed_speed = 2.0
 var move_time_min = 1.0
 var move_time_max = 3.0
 var long_move_time_min = 3.0
@@ -101,7 +102,7 @@ func _physics_process(delta):
 	else:	# Enemy is aggro
 		if flashed and madness != 5:
 			$Armature/Skeleton3D/OmniLight3D.light_color = Color(1, 1, 0.376)
-			speed = 2.0
+			speed = flashed_speed
 			if deaggro_timer.is_stopped():
 				deaggro_timer.start()
 		else:
