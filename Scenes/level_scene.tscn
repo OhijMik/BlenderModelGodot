@@ -1,18 +1,27 @@
-[gd_scene load_steps=3 format=3 uid="uid://l2eermk8vlhi"]
+[gd_scene load_steps=5 format=3 uid="uid://l2eermk8vlhi"]
 
 [ext_resource type="Script" path="res://Scripts/level_scene.gd" id="1_pj5a0"]
+[ext_resource type="Texture2D" uid="uid://enruinbvkchx" path="res://Background.png" id="2_gnmyy"]
+[ext_resource type="FontFile" uid="uid://otx65omrvscf" path="res://shlop rg.otf" id="3_2e3wx"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_32sud"]
 
 [node name="level_scene" type="Node2D"]
 script = ExtResource("1_pj5a0")
 
+[node name="Bg" type="Sprite2D" parent="."]
+position = Vector2(482.75, 309)
+scale = Vector2(1.7893, 2.13855)
+texture = ExtResource("2_gnmyy")
+
 [node name="Label" type="Label" parent="."]
-offset_left = 360.0
-offset_top = 80.0
-offset_right = 792.0
-offset_bottom = 160.0
-theme_override_font_sizes/font_size = 50
+offset_left = 304.0
+offset_top = 72.0
+offset_right = 840.0
+offset_bottom = 192.0
+theme_override_colors/font_color = Color(0.607843, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_2e3wx")
+theme_override_font_sizes/font_size = 80
 text = "Levels"
 horizontal_alignment = 1
 
@@ -21,7 +30,8 @@ offset_left = 424.0
 offset_top = 232.0
 offset_right = 728.0
 offset_bottom = 296.0
-theme_override_font_sizes/font_size = 25
+theme_override_fonts/font = ExtResource("3_2e3wx")
+theme_override_font_sizes/font_size = 40
 text = "Normal"
 
 [node name="HardButton" type="Button" parent="."]
@@ -29,7 +39,9 @@ offset_left = 424.0
 offset_top = 352.0
 offset_right = 728.0
 offset_bottom = 416.0
-theme_override_font_sizes/font_size = 25
+theme_override_colors/font_color = Color(0.870588, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_2e3wx")
+theme_override_font_sizes/font_size = 40
 text = "Hard"
 
 [node name="HellButton" type="Button" parent="."]
@@ -37,7 +49,9 @@ offset_left = 424.0
 offset_top = 472.0
 offset_right = 728.0
 offset_bottom = 536.0
-theme_override_font_sizes/font_size = 25
+theme_override_colors/font_color = Color(0.364706, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_2e3wx")
+theme_override_font_sizes/font_size = 40
 text = "Hell"
 icon = SubResource("ViewportTexture_32sud")
 
@@ -46,7 +60,8 @@ offset_left = 40.0
 offset_top = 568.0
 offset_right = 184.0
 offset_bottom = 611.0
-theme_override_font_sizes/font_size = 25
+theme_override_fonts/font = ExtResource("3_2e3wx")
+theme_override_font_sizes/font_size = 40
 text = "Back"
 
 [connection signal="pressed" from="NormalButton" to="." method="_on_normal_button_pressed"]
