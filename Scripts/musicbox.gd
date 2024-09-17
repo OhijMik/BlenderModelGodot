@@ -2,33 +2,34 @@ extends Node3D
 
 @onready var model_anim = get_node("AnimationPlayer")
 @onready var handle_anim = get_node("HandleAnimationPlayer")
-@onready var timer = get_node("PlayTimer")
+@onready var fade_anim = get_node("FadeAnimationPlayer")
+@onready var anim_timer = get_node("PlayTimer")
+@onready var fade_timer = get_node("FadeTimer")
 @onready var bar = get_node("../../../../../UI/SongProgressBar")
 
 var rng = RandomNumberGenerator.new()
 
 var playing = false
+var fading = false
 
 var cur_pos_num = 1
 
 
 func _ready():
 	# musicbox_spawn()
-	#position = Vector3(-17.8, 0.05, 9)
-	#rotation.y = 5 * PI/4
-	#cur_pos_num = 3
 	pass
 
 
 func _process(delta):
-	bar.value = 5.0 - timer.time_left	# Changing the bar value
-	if playing and timer.is_stopped():
-		timer.start()
+	bar.value = 5.0 - anim_timer.time_left	# Changing the bar value
+	
+	if playing and anim_timer.is_stopped() and not fading:
+		anim_timer.start()
 		model_anim.play("model")
 		handle_anim.play("handle")
 		bar.show()
 	elif not playing:
-		timer.stop()
+		anim_timer.stop()
 		model_anim.stop()
 		handle_anim.stop()
 		bar.hide()
@@ -66,7 +67,15 @@ func _on_play_timer_timeout():
 	model_anim.stop()
 	handle_anim.stop()
 	playing = false
+	fading = true
 	bar.hide()
+	fade_timer.start()
+	fade_anim.play("fade")
+
+
+func _on_fade_timer_timeout():
 	position = Vector3(0, 0, 10)
+	fade_anim.stop()
+	scale = Vector3(0.59, 0.59, 0.59)
 	global.required_musicbox -= 1
 	musicbox_spawn()
